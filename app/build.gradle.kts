@@ -1,5 +1,6 @@
 plugins {
     id(Plugins.APPLICATION)
+    id(Plugins.DAGGER_HILT)
     kotlin(Plugins.KOTLIN_ANDROID)
     kotlin(Plugins.KOTLIN_KAPT)
     kotlin(Plugins.KOTLIN_SERIALIZATION)
@@ -46,9 +47,14 @@ dependencies {
     implementation(Libs.compose_activity)
     implementation(Libs.compose_material)
     implementation(Libs.compose_ui_tooling_preview)
+    implementation(Libs.dagger_hilt)
+    kapt(Libs.dagger_hilt_compiler)
     implementation(Libs.lifecycle_runtime_ktx)
+    implementation(Libs.lifecycle_livedata_ktx)
 
     // 3rd party dependencies
+    implementation(Libs.kotlinx_coroutines_android)
+    implementation(Libs.kotlinx_coroutines_core)
     implementation(Libs.kotlinx_serialization)
     implementation(Libs.kotlinx_serialization_converter)
     implementation(Libs.okhttp_logging)

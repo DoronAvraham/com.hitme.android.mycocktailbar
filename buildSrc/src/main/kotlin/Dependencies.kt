@@ -10,10 +10,12 @@ object Versions {
     const val ANDROIDX_LIFECYCLE = "2.4.1"
     const val COMPOSE = "1.1.1"
     const val COMPOSE_ACTIVITY = "1.4.0"
+    const val DAGGER_HILT = "2.40"
     const val PLUGIN_APPLICATION = "7.1.2"
 
     // 3rd party dependencies
     const val KOTLIN = "1.6.10"
+    const val KOTLINX_COROUTINES = "1.6.0"
     const val KOTLINX_RETROFIT_CONVERTER = "0.8.0"
     const val KOTLINX_SERIALIZATION = "1.3.2"
     const val OKHTTP_LOGGING = "4.9.2"
@@ -32,10 +34,15 @@ object Libs {
     const val compose_material = "androidx.compose.material:material:${Versions.COMPOSE}"
     const val compose_ui_tooling_preview = "androidx.compose.ui:ui-tooling-preview:${Versions.COMPOSE}"
     const val compose_activity = "androidx.activity:activity-compose:${Versions.COMPOSE_ACTIVITY}"
+    const val dagger_hilt = "com.google.dagger:hilt-android:${Versions.DAGGER_HILT}"
+    const val dagger_hilt_compiler = "com.google.dagger:hilt-android-compiler:${Versions.DAGGER_HILT}"
     const val lifecycle_runtime_ktx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.ANDROIDX_LIFECYCLE}"
+    const val lifecycle_livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.ANDROIDX_LIFECYCLE}"
 
     // 3rd party dependencies
     const val okhttp_logging = "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP_LOGGING}"
+    const val kotlinx_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES}"
+    const val kotlinx_coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLINX_COROUTINES}"
     const val kotlinx_serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.KOTLINX_SERIALIZATION}"
     const val kotlinx_serialization_converter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.KOTLINX_RETROFIT_CONVERTER}"
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
@@ -50,6 +57,7 @@ object Libs {
 
 object Plugins {
     const val APPLICATION = "com.android.application"
+    const val DAGGER_HILT = "dagger.hilt.android.plugin"
     const val KOTLIN_ANDROID = "android"
     const val KOTLIN_KAPT = "kapt"
     const val KOTLIN_SERIALIZATION = "plugin.serialization"
