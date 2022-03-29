@@ -20,6 +20,7 @@ object Versions {
     const val KOTLINX_COROUTINES = "1.6.0"
     const val KOTLINX_RETROFIT_CONVERTER = "0.8.0"
     const val KOTLINX_SERIALIZATION = "1.3.2"
+    const val KTLINT = "10.2.1"
     const val OKHTTP_LOGGING = "4.9.2"
     const val RETROFIT = "2.9.0"
 

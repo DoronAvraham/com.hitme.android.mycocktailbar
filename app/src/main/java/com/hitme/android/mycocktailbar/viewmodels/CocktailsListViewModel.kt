@@ -1,14 +1,13 @@
 package com.hitme.android.mycocktailbar.viewmodels
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hitme.android.mycocktailbar.data.CocktailsRepository
 import com.hitme.android.mycocktailbar.data.Drink
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-import androidx.compose.runtime.mutableStateListOf
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class CocktailsListViewModel @Inject constructor(

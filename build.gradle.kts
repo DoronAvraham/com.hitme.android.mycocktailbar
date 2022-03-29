@@ -6,6 +6,7 @@ buildscript {
     dependencies {
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.DAGGER_HILT}")
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.KOTLIN}")
+        classpath("org.jlleitschuh.gradle:ktlint-gradle:${Versions.KTLINT}")
     }
 }
 
@@ -16,6 +17,7 @@ plugins {
 }
 
 allprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
     repositories {
         google()
         mavenCentral()

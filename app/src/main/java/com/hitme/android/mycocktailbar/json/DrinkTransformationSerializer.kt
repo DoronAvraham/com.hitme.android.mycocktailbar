@@ -17,7 +17,8 @@ object DrinkTransformationSerializer : JsonTransformingSerializer<Drink>(Drink.s
         val ingredients = asList("strIngredient", element as JsonObject)
         val measures = asList("strMeasure", element)
 
-        return JsonObject(element.toMutableMap().apply {
+        return JsonObject(
+            element.toMutableMap().apply {
             put("ingredients", JsonArray(ingredients))
             put("measures", JsonArray(measures))
         })

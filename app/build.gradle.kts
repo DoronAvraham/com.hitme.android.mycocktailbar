@@ -23,8 +23,11 @@ android {
     buildTypes {
         named("release") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro",
-                "proguard-rules-kotlinx.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+                "proguard-rules-kotlinx.pro"
+            )
         }
     }
 
@@ -63,7 +66,7 @@ dependencies {
     implementation(Libs.okhttp_logging)
     implementation(Libs.retrofit)
 
-    //Test dependencies
+    // Test dependencies
     testImplementation(Libs.junit)
     androidTestImplementation(Libs.androidx_junit)
     androidTestImplementation(Libs.androidx_espresso)

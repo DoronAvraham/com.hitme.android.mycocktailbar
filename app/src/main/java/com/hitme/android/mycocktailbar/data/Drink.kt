@@ -6,17 +6,17 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Drink(
     @SerialName("idDrink")
-    val id: String= "",
+    val id: String = "",
     @SerialName("strDrink")
-    val name: String= "",
+    val name: String = "",
     @SerialName("ingredients")
     val ingredients: List<String> = listOf(),
     @SerialName("measures")
     val measures: List<String> = listOf(),
     @SerialName("strInstructions")
-    val instructions: String= "",
+    val instructions: String = "",
     @SerialName("strDrinkThumb")
-    val thumbnailUrl: String= "",
+    val thumbnailUrl: String = "",
     @SerialName("strImageSource")
     val imageUrl: String = ""
 )
