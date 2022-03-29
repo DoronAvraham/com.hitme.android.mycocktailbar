@@ -6,6 +6,7 @@ object AndroidVersions {
 
 object Versions {
     // Android dependencies
+    const val ANDROIDX_APPCOMPAT = "1.4.1"
     const val ANDROIDX_CORE_KTX = "1.7.0"
     const val ANDROIDX_LIFECYCLE = "2.4.1"
     const val COMPOSE = "1.1.1"
@@ -14,6 +15,7 @@ object Versions {
     const val PLUGIN_APPLICATION = "7.1.2"
 
     // 3rd party dependencies
+    const val GLIDE = "4.13.1"
     const val KOTLIN = "1.6.10"
     const val KOTLINX_COROUTINES = "1.6.0"
     const val KOTLINX_RETROFIT_CONVERTER = "0.8.0"
@@ -29,6 +31,7 @@ object Versions {
 
 object Libs {
 // Android dependencies
+    const val androidx_appcompat = "androidx.appcompat:appcompat-resources:${Versions.ANDROIDX_APPCOMPAT}"
     const val androidx_core_ktx = "androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX}"
     const val compose = "androidx.compose.ui:ui:${Versions.COMPOSE}"
     const val compose_material = "androidx.compose.material:material:${Versions.COMPOSE}"
@@ -40,6 +43,8 @@ object Libs {
     const val lifecycle_livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.ANDROIDX_LIFECYCLE}"
 
     // 3rd party dependencies
+    const val glide = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
+    const val glide_compiler = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
     const val okhttp_logging = "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP_LOGGING}"
     const val kotlinx_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES}"
     const val kotlinx_coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLINX_COROUTINES}"

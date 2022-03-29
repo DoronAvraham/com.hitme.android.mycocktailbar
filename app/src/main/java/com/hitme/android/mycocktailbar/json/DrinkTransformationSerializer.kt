@@ -30,7 +30,7 @@ object DrinkTransformationSerializer : JsonTransformingSerializer<Drink>(Drink.s
             if (item.equals("null") || item.isNullOrEmpty()) {
                 break
             } else {
-                list.add(JsonPrimitive(item))
+                list.add(JsonPrimitive(item.replace("\"", "")))
             }
         }
         return list

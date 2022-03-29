@@ -42,6 +42,7 @@ android {
 dependencies {
 
     // Android dependencies
+    implementation(Libs.androidx_appcompat)
     implementation(Libs.androidx_core_ktx)
     implementation(Libs.compose)
     implementation(Libs.compose_activity)
@@ -53,6 +54,8 @@ dependencies {
     implementation(Libs.lifecycle_livedata_ktx)
 
     // 3rd party dependencies
+    implementation(Libs.glide)
+    kapt(Libs.glide_compiler)
     implementation(Libs.kotlinx_coroutines_android)
     implementation(Libs.kotlinx_coroutines_core)
     implementation(Libs.kotlinx_serialization)
