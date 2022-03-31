@@ -10,9 +10,9 @@ data class Drink(
     @SerialName("strDrink")
     val name: String = "",
     @SerialName("ingredients")
-    val ingredients: List<String> = listOf(),
+    val ingredients: List<String> = emptyList(),
     @SerialName("measures")
-    val measures: List<String> = listOf(),
+    val measures: List<String> = emptyList(),
     @SerialName("strInstructions")
     val instructions: String = "",
     @SerialName("strDrinkThumb")

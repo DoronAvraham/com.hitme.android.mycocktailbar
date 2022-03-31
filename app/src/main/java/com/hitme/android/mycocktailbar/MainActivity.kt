@@ -8,16 +8,18 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -26,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -45,8 +48,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyCocktailBarTheme {
-                Surface {
+            MyCocktailBarTheme(darkTheme = true) {
+                Surface(color = MaterialTheme.colors.background) {
                     PresentList(
                         viewModel.drinks,
                         viewModel::searchCocktail
@@ -65,11 +68,12 @@ fun PresentList(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(8.dp)
+            .padding(15.dp)
     ) {
         SearchBar(onClick)
+        Spacer(modifier = Modifier.height(8.dp))
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(6.dp)
+            verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             items(items = drinks, key = { drink -> drink.id }) {
                 ListItem(it.name, it.ingredients, it.thumbnailUrl)
@@ -91,7 +95,10 @@ fun SearchBar(onClick: (String) -> Unit) {
             maxLines = 1,
             singleLine = true
         )
-        IconButton(onClick = { onClick(text.value) }, enabled = text.value.isNotEmpty()) {
+        IconButton(
+            onClick = { onClick(text.value) },
+            enabled = text.value.isNotEmpty()
+        ) {
             Icon(
                 painter = painterResource(id = android.R.drawable.ic_menu_search),
                 contentDescription = ""
@@ -102,16 +109,17 @@ fun SearchBar(onClick: (String) -> Unit) {
 
 @Composable
 fun ListItem(name: String, ingredients: List<String>, imageUrl: String) {
-    Card(shape = RoundedCornerShape(3.dp), elevation = 12.dp) {
-        Row(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
-        ) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(120.dp),
+        backgroundColor = MaterialTheme.colors.primary
+    ) {
+        Row {
             GlideImage(
                 modifier = Modifier
-                    .size(128.dp, 128.dp)
-                    .padding(end = 8.dp),
+                    .size(140.dp, 120.dp)
+                    .clip(MaterialTheme.shapes.medium),
                 contentDescription = "",
                 data = imageUrl,
                 placeHolderDrawable = AppCompatResources.getDrawable(
@@ -122,9 +130,10 @@ fun ListItem(name: String, ingredients: List<String>, imageUrl: String) {
                     requestBuilder.centerCrop()
                 }
             )
-            Column {
+            Column(modifier = Modifier.padding(10.dp)) {
                 Text(
                     text = name,
+                    color = MaterialTheme.colors.onSurface,
                     modifier = Modifier.padding(bottom = 8.dp),
                     fontWeight = FontWeight.Bold,
                     overflow = TextOverflow.Ellipsis,
@@ -132,6 +141,7 @@ fun ListItem(name: String, ingredients: List<String>, imageUrl: String) {
                 )
                 Text(
                     text = ingredients.joinToString(),
+                    color = MaterialTheme.colors.onSurface,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 3
                 )
@@ -151,5 +161,7 @@ fun DefaultPreview() {
 @Preview(showBackground = true)
 @Composable
 fun ListItemPreview() {
-    ListItem("Margarita", PreviewUtils.ingredients, "")
+    MyCocktailBarTheme {
+        ListItem("Margarita", PreviewUtils.ingredients, "")
+    }
 }
