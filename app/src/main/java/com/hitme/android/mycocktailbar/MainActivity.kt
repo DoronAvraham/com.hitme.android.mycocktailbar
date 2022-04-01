@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
             MyCocktailBarTheme(darkTheme = true) {
                 Surface(color = MaterialTheme.colors.background) {
                     PresentList(
-                        viewModel.drinks,
+                        viewModel.result.collectAsStateLifecycleAware().value,
                         viewModel::searchCocktail
                     )
                 }
@@ -73,7 +73,7 @@ fun PresentList(
         SearchBar(onClick)
         Spacer(modifier = Modifier.height(8.dp))
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             items(items = drinks, key = { drink -> drink.id }) {
                 ListItem(it.name, it.ingredients, it.thumbnailUrl)

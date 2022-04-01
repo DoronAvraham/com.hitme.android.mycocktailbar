@@ -19,9 +19,10 @@ object DrinkTransformationSerializer : JsonTransformingSerializer<Drink>(Drink.s
 
         return JsonObject(
             element.toMutableMap().apply {
-            put("ingredients", JsonArray(ingredients))
-            put("measures", JsonArray(measures))
-        })
+                put("ingredients", JsonArray(ingredients))
+                put("measures", JsonArray(measures))
+            }
+        )
     }
 
     private fun asList(prefix: String, jsonObject: JsonObject): List<JsonPrimitive> {

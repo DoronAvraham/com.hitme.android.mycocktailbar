@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class CocktailsRepository @Inject constructor(private val cocktailsService: CocktailsService) {
 
-    suspend fun getSearchResults(query: String): Flow<List<Drink>> {
+    fun getSearchResults(query: String): Flow<List<Drink>> {
         return flow {
             val response = cocktailsService.search(query)
             emit(response.drinks)

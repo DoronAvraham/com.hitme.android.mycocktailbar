@@ -32,16 +32,14 @@ object Versions {
 
 object Libs {
 // Android dependencies
+    const val androidx_activity_compose = "androidx.activity:activity-compose:${Versions.COMPOSE_ACTIVITY}"
     const val androidx_appcompat = "androidx.appcompat:appcompat-resources:${Versions.ANDROIDX_APPCOMPAT}"
     const val androidx_core_ktx = "androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX}"
-    const val compose = "androidx.compose.ui:ui:${Versions.COMPOSE}"
-    const val compose_material = "androidx.compose.material:material:${Versions.COMPOSE}"
-    const val compose_ui_tooling_preview = "androidx.compose.ui:ui-tooling-preview:${Versions.COMPOSE}"
-    const val compose_activity = "androidx.activity:activity-compose:${Versions.COMPOSE_ACTIVITY}"
+    const val androidx_compose = "androidx.compose.ui:ui-tooling:${Versions.COMPOSE}"
+    const val androidx_compose_material = "androidx.compose.material:material:${Versions.COMPOSE}"
     const val dagger_hilt = "com.google.dagger:hilt-android:${Versions.DAGGER_HILT}"
     const val dagger_hilt_compiler = "com.google.dagger:hilt-android-compiler:${Versions.DAGGER_HILT}"
     const val lifecycle_runtime_ktx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.ANDROIDX_LIFECYCLE}"
-    const val lifecycle_livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.ANDROIDX_LIFECYCLE}"
 
     // 3rd party dependencies
     const val glide = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
@@ -58,7 +56,6 @@ object Libs {
     const val androidx_junit = "androidx.test.ext:junit:${Versions.ANDROIDX_JUNIT}"
     const val androidx_espresso = "androidx.test.espresso:espresso-core:${Versions.ANDROIDX_ESPRESSO}"
     const val androidx_compose_ui_test = "androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE}"
-    const val androidx_compose_ui_tooling = "androidx.compose.ui:ui-tooling:${Versions.COMPOSE}"
 }
 
 object Plugins {

@@ -45,16 +45,14 @@ android {
 dependencies {
 
     // Android dependencies
+    implementation(Libs.androidx_activity_compose)
     implementation(Libs.androidx_appcompat)
+    implementation(Libs.androidx_compose)
+    implementation(Libs.androidx_compose_material)
     implementation(Libs.androidx_core_ktx)
-    implementation(Libs.compose)
-    implementation(Libs.compose_activity)
-    implementation(Libs.compose_material)
-    implementation(Libs.compose_ui_tooling_preview)
     implementation(Libs.dagger_hilt)
     kapt(Libs.dagger_hilt_compiler)
     implementation(Libs.lifecycle_runtime_ktx)
-    implementation(Libs.lifecycle_livedata_ktx)
 
     // 3rd party dependencies
     implementation(Libs.glide)
@@ -71,5 +69,4 @@ dependencies {
     androidTestImplementation(Libs.androidx_junit)
     androidTestImplementation(Libs.androidx_espresso)
     androidTestImplementation(Libs.androidx_compose_ui_test)
-    debugImplementation(Libs.androidx_compose_ui_tooling)
 }
