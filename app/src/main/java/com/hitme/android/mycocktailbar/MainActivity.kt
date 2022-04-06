@@ -21,23 +21,31 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hitme.android.mycocktailbar.data.Drink
 import com.hitme.android.mycocktailbar.ui.theme.MyCocktailBarTheme
 import com.hitme.android.mycocktailbar.viewmodels.CocktailsListViewModel
+import com.hitme.android.mycocktailbar.viewmodels.DrinksUiState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,12 +55,17 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             MyCocktailBarTheme(darkTheme = true) {
                 Surface(color = MaterialTheme.colors.background) {
+                    val uiState by viewModel.uiState.collectAsStateLifecycleAware()
                     PresentList(
-                        viewModel.result.collectAsStateLifecycleAware().value,
-                        viewModel::searchCocktail
+                        uiState,
+                        rememberScaffoldState(),
+                        viewModel::searchCocktail,
+                        viewModel::onErrorDismissed,
+
                     )
                 }
             }
@@ -62,22 +75,47 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun PresentList(
-    drinks: List<Drink>,
-    onClick: (String) -> Unit
+    uiState: DrinksUiState,
+    scaffoldState: ScaffoldState,
+    onSearch: (String) -> Unit,
+    onErrorDismissed: () -> Unit
+
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(15.dp)
-    ) {
-        SearchBar(onClick)
-        Spacer(modifier = Modifier.height(8.dp))
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+    Scaffold(scaffoldState = scaffoldState) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(15.dp)
         ) {
-            items(items = drinks, key = { drink -> drink.id }) {
-                ListItem(it.name, it.ingredients, it.thumbnailUrl)
+            SearchBar(onSearch)
+            Spacer(modifier = Modifier.height(8.dp))
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                items(items = uiState.drinks, key = { drink -> drink.id }) {
+                    ListItem(it.name, it.ingredients, it.thumbnailUrl)
+                }
             }
+        }
+    }
+
+    if (uiState.errorMessageId > -1) {
+        val errorMessageText = stringResource(id = uiState.errorMessageId)
+        val retryMessageText = stringResource(R.string.retry)
+
+        val onSearchState by rememberUpdatedState(onSearch)
+        val onErrorDismissState by rememberUpdatedState(onErrorDismissed)
+
+        LaunchedEffect(errorMessageText, retryMessageText, scaffoldState) {
+            val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
+                message = errorMessageText,
+                actionLabel = retryMessageText
+            )
+            if (snackbarResult == SnackbarResult.ActionPerformed) {
+                onSearchState(uiState.query)
+            }
+            // Once the message is displayed and dismissed, notify the ViewModel
+            onErrorDismissState()
         }
     }
 }
@@ -154,7 +192,12 @@ fun ListItem(name: String, ingredients: List<String>, imageUrl: String) {
 @Composable
 fun DefaultPreview() {
     MyCocktailBarTheme {
-        PresentList(PreviewUtils.drinksList) {}
+        PresentList(
+            DrinksUiState(isLoading = false, errorMessageId = -1, drinks = PreviewUtils.drinksList),
+            rememberScaffoldState(),
+            {},
+            {}
+        )
     }
 }
 

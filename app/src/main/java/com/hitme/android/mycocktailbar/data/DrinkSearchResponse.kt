@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class DrinkSearchResponse(
     @SerialName("drinks")
-    val drinks: List<@Serializable(with = DrinkTransformationSerializer::class) Drink>
+    val drinks: List<@Serializable(with = DrinkTransformationSerializer::class) Drink> = emptyList()
 )
