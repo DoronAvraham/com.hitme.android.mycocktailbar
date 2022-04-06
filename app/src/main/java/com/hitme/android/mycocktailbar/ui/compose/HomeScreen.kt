@@ -1,9 +1,5 @@
-package com.hitme.android.mycocktailbar
+package com.hitme.android.mycocktailbar.ui.compose
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,7 +22,6 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarResult
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -48,38 +43,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hitme.android.mycocktailbar.R
 import com.hitme.android.mycocktailbar.ui.theme.MyCocktailBarTheme
-import com.hitme.android.mycocktailbar.viewmodels.CocktailsListViewModel
-import com.hitme.android.mycocktailbar.viewmodels.DrinksUiState
-import dagger.hilt.android.AndroidEntryPoint
-
-@AndroidEntryPoint
-class MainActivity : ComponentActivity() {
-
-    private val viewModel: CocktailsListViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setContent {
-            MyCocktailBarTheme(darkTheme = true) {
-                Surface(color = MaterialTheme.colors.background) {
-                    val uiState by viewModel.uiState.collectAsStateLifecycleAware()
-                    PresentList(
-                        uiState,
-                        rememberScaffoldState(),
-                        viewModel::searchCocktail,
-                        viewModel::onErrorDismissed,
-
-                    )
-                }
-            }
-        }
-    }
-}
+import com.hitme.android.mycocktailbar.ui.viewmodels.DrinksUiState
 
 @Composable
-fun PresentList(
+fun Home(
     uiState: DrinksUiState,
     scaffoldState: ScaffoldState,
     onSearch: (String) -> Unit,
@@ -142,7 +111,7 @@ fun SearchBar(onClick: (String) -> Unit) {
             keyboardOptions = KeyboardOptions.Default.copy(
                 autoCorrect = false,
                 keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Search,
+                imeAction = ImeAction.Search
 
             ),
             keyboardActions = KeyboardActions(onSearch = {
@@ -209,7 +178,7 @@ fun ListItem(name: String, ingredients: List<String>, imageUrl: String) {
 @Composable
 fun DefaultPreview() {
     MyCocktailBarTheme {
-        PresentList(
+        Home(
             DrinksUiState(isLoading = false, errorMessageId = -1, drinks = PreviewUtils.drinksList),
             rememberScaffoldState(),
             {},

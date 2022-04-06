@@ -1,4 +1,4 @@
-package com.hitme.android.mycocktailbar
+package com.hitme.android.mycocktailbar.ui.compose
 
 import com.hitme.android.mycocktailbar.data.Drink
 

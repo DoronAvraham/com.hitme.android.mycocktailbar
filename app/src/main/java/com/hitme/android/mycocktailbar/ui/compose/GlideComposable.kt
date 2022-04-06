@@ -1,4 +1,4 @@
-package com.hitme.android.mycocktailbar
+package com.hitme.android.mycocktailbar.ui.compose
 
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.Image

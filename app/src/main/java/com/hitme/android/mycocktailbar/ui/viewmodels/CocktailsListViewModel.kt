@@ -1,4 +1,4 @@
-package com.hitme.android.mycocktailbar.viewmodels
+package com.hitme.android.mycocktailbar.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
