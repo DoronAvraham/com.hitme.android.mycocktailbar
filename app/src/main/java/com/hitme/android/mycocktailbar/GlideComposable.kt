@@ -5,8 +5,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
@@ -42,9 +44,7 @@ fun GlideImage(
         return
     }
     BoxWithConstraints(modifier = modifier) {
-        val state = remember(placeHolderDrawable) {
-            mutableStateOf<ImageBitmap?>(null)
-        }
+        var state by remember { mutableStateOf<ImageBitmap?>(null) }
         val context = LocalContext.current
         DisposableEffect(data, modifier, glideModifier, placeHolderDrawable) {
             val glide = Glide.with(context)
@@ -56,18 +56,18 @@ fun GlideImage(
                 constraints.maxHeight
             ) {
                 override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                    state.value = resource.toBitmap().asImageBitmap()
+                    state = resource.toBitmap().asImageBitmap()
                 }
 
                 override fun onLoadStarted(placeholder: Drawable?) {
                     if (placeholder != null) {
-                        state.value = placeholder.toBitmap().asImageBitmap()
+                        state = placeholder.toBitmap().asImageBitmap()
                     }
                 }
 
                 override fun onLoadCleared(placeholder: Drawable?) {
                     if (placeholder != null) {
-                        state.value = placeholder.toBitmap().asImageBitmap()
+                        state = placeholder.toBitmap().asImageBitmap()
                     }
                 }
             }).request!!
@@ -75,7 +75,7 @@ fun GlideImage(
                 request.clear()
             }
         }
-        val currentBitmap = state.value
+        val currentBitmap = state
         if (currentBitmap != null) {
             Image(
                 modifier = modifier,
