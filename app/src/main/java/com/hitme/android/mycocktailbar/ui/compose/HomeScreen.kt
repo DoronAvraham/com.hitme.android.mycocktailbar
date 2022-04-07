@@ -53,7 +53,6 @@ fun Home(
     scaffoldState: ScaffoldState,
     onSearch: (String) -> Unit,
     onErrorDismissed: () -> Unit
-
 ) {
     Scaffold(scaffoldState = scaffoldState) {
         Column(
@@ -61,7 +60,7 @@ fun Home(
                 .fillMaxSize()
                 .padding(15.dp)
         ) {
-            SearchBar(onSearch)
+            SearchBar(uiState.isLoading, onSearch)
             Spacer(modifier = Modifier.height(8.dp))
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -95,7 +94,7 @@ fun Home(
 }
 
 @Composable
-fun SearchBar(onClick: (String) -> Unit) {
+fun SearchBar(isLoading: Boolean, onClick: (String) -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically) {
 
         val text = rememberSaveable { mutableStateOf("") }
@@ -107,6 +106,7 @@ fun SearchBar(onClick: (String) -> Unit) {
                 .padding(end = 6.dp),
             value = text.value,
             onValueChange = { text.value = it },
+            enabled = !isLoading,
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(
                 autoCorrect = false,
@@ -119,9 +119,13 @@ fun SearchBar(onClick: (String) -> Unit) {
                 focusManager.clearFocus()
             })
         )
+
         IconButton(
-            onClick = { onClick(text.value) },
-            enabled = text.value.isNotEmpty()
+            onClick = {
+                onClick(text.value)
+                focusManager.clearFocus()
+            },
+            enabled = text.value.isNotEmpty() && !isLoading
         ) {
             Icon(
                 painter = painterResource(id = android.R.drawable.ic_menu_search),

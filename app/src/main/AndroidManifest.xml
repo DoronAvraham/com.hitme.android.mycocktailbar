@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyCocktailBar">
         <activity
-            android:name=".MainActivity"
+            android:name="com.hitme.android.mycocktailbar.ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MyCocktailBar">
             <intent-filter>

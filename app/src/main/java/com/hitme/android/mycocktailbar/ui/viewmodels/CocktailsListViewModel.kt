@@ -37,7 +37,7 @@ class CocktailsListViewModel @Inject constructor(
      * Get [query] search results via cold flow and update the [_uiState] (hot flow).
      */
     fun searchCocktail(query: String) {
-        _uiState.update { it.copy(query = query) }
+        _uiState.update { it.copy(query = query, isLoading = true, drinks = emptyList()) }
         job?.cancel()
         job = viewModelScope.launch {
             repository.getSearchResults(query)
@@ -75,6 +75,6 @@ class CocktailsListViewModel @Inject constructor(
 data class DrinksUiState(
     val drinks: List<Drink> = emptyList(),
     val query: String = "",
-    val isLoading: Boolean = true,
+    val isLoading: Boolean = false,
     val errorMessageId: Int = -1
 )
