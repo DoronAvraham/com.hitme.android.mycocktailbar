@@ -1,8 +1,9 @@
-package com.hitme.android.mycocktailbar.ui.compose
+package com.hitme.android.mycocktailbar.ui
 
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +20,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Text
@@ -44,30 +44,33 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hitme.android.mycocktailbar.R
+import com.hitme.android.mycocktailbar.ui.compose.GlideImage
+import com.hitme.android.mycocktailbar.ui.compose.PreviewUtils
 import com.hitme.android.mycocktailbar.ui.theme.MyCocktailBarTheme
 import com.hitme.android.mycocktailbar.ui.viewmodels.DrinksUiState
 
 @Composable
-fun Home(
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    paddingValues: PaddingValues,
     uiState: DrinksUiState,
     scaffoldState: ScaffoldState,
     onSearch: (String) -> Unit,
     onErrorDismissed: () -> Unit
 ) {
-    Scaffold(scaffoldState = scaffoldState) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(15.dp)
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(15.dp)
+            .padding(paddingValues)
+    ) {
+        SearchBar(uiState.isLoading, onSearch)
+        Spacer(modifier = Modifier.height(8.dp))
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            SearchBar(uiState.isLoading, onSearch)
-            Spacer(modifier = Modifier.height(8.dp))
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                items(items = uiState.drinks, key = { drink -> drink.id }) {
-                    ListItem(it.name, it.ingredients, it.thumbnailUrl)
-                }
+            items(items = uiState.drinks, key = { drink -> drink.id }) {
+                ListItem(it.name, it.ingredients, it.thumbnailUrl)
             }
         }
     }
@@ -182,11 +185,12 @@ fun ListItem(name: String, ingredients: List<String>, imageUrl: String) {
 @Composable
 fun DefaultPreview() {
     MyCocktailBarTheme {
-        Home(
-            DrinksUiState(isLoading = false, errorMessageId = -1, drinks = PreviewUtils.drinksList),
-            rememberScaffoldState(),
-            {},
-            {}
+        HomeScreen(
+            paddingValues = PaddingValues(0.dp),
+            uiState = DrinksUiState(isLoading = false, errorMessageId = -1, drinks = PreviewUtils.drinksList),
+            scaffoldState = rememberScaffoldState(),
+            onSearch = {},
+            onErrorDismissed = {}
         )
     }
 }
@@ -195,6 +199,10 @@ fun DefaultPreview() {
 @Composable
 fun ListItemPreview() {
     MyCocktailBarTheme {
-        ListItem("Margarita", PreviewUtils.ingredients, "")
+        ListItem(
+            name = "Margarita",
+            ingredients = PreviewUtils.ingredients,
+            imageUrl = ""
+        )
     }
 }
