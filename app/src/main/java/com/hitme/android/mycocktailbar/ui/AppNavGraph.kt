@@ -23,11 +23,10 @@ fun NavGraph(
     paddingValues: PaddingValues,
     scaffoldState: ScaffoldState
 ) {
+    val cocktailsViewModel = hiltViewModel<CocktailsListViewModel>()
+    val uiState by cocktailsViewModel.uiState.collectAsStateLifecycleAware()
     NavHost(navController = navController, startDestination = AppDestinations.HOME_SCREEN) {
         composable(AppDestinations.HOME_SCREEN) {
-            // TODO use same instance of CocktailsListViewModel for both screens.
-            val cocktailsViewModel = hiltViewModel<CocktailsListViewModel>()
-            val uiState by cocktailsViewModel.uiState.collectAsStateLifecycleAware()
             HomeScreen(
                 uiState = uiState,
                 paddingValues = paddingValues,
@@ -42,8 +41,6 @@ fun NavGraph(
             }
         }
         composable(AppDestinations.FAVORITES_SCREEN) {
-            val cocktailsViewModel = hiltViewModel<CocktailsListViewModel>()
-            val uiState by cocktailsViewModel.uiState.collectAsStateLifecycleAware()
             FavoritesScreen(
                 cocktails = uiState.favorites,
                 paddingValues = paddingValues,
