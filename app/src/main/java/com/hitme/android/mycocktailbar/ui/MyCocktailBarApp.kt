@@ -15,8 +15,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.hitme.android.mycocktailbar.R
 import com.hitme.android.mycocktailbar.ui.theme.MyCocktailBarTheme
 
 /**
@@ -44,7 +46,8 @@ fun BottomNavBar(navigationActions: NavigationActions) {
 
     BottomNavigation(elevation = 10.dp) {
         BottomNavigationItem(
-            label = { Text(text = "Home") },
+            label = { Text(text = stringResource(R.string.nav_btn_home)) },
+            enabled = selectedIndex != 0,
             selected = selectedIndex == 0,
             icon = {
                 Icon(imageVector = Icons.Default.Home, "")
@@ -55,7 +58,8 @@ fun BottomNavBar(navigationActions: NavigationActions) {
             }
         )
         BottomNavigationItem(
-            label = { Text(text = "Favorites") },
+            label = { Text(stringResource(R.string.nav_btn_favorites)) },
+            enabled = selectedIndex != 1,
             selected = selectedIndex == 1,
             icon = {
                 Icon(imageVector = Icons.Default.Favorite, "")

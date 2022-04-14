@@ -1,7 +1,7 @@
 package com.hitme.android.mycocktailbar.ui
 
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import com.hitme.android.mycocktailbar.ui.AppDestinations.HOME_SCREEN
 
 /**
  * Destinations used in the application.
@@ -16,29 +16,15 @@ object AppDestinations {
  */
 class NavigationActions(navController: NavHostController) {
     val navigateToHomeScreen: () -> Unit = {
-        navController.navigate(AppDestinations.HOME_SCREEN) {
-            // Pop up to the start destination of the graph to
-            // avoid building up a large stack of destinations
-            // on the back stack as users select items
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
-            // Avoid multiple copies of the same destination when
-            // re selecting the same item
+        navController.popBackStack()
+        navController.navigate(HOME_SCREEN) {
             launchSingleTop = true
-            // Restore state when re selecting a previously selected item
-            restoreState = true
         }
     }
-    // TODO fix back navigation after visiting the favorites screen.
     val navigateToFavoritesScreen: () -> Unit = {
+        navController.popBackStack()
         navController.navigate(AppDestinations.FAVORITES_SCREEN) {
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-                inclusive = true
-            }
             launchSingleTop = true
-            restoreState = true
         }
     }
 }

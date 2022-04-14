@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">My Cocktail Bar</string>
     
-    <string name="retry">Retry</string>
     <string name="comm_error">Communication error. Please check your internet connection and try again.</string>
     <string name="generic_error">Unexpected error. Please try again.</string>
+    <string name="nav_btn_home">Home</string>
+    <string name="nav_btn_favorites">Favorites</string>
+    <string name="retry">Retry</string>
 
 </resources>
