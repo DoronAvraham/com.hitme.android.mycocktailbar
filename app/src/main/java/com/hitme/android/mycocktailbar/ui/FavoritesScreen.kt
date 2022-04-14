@@ -41,12 +41,9 @@ fun FavoritesScreen(
 @Composable
 fun FavoritesScreenPreview() {
     MyCocktailBarTheme {
-        HomeScreen(
+        FavoritesScreen(
             paddingValues = PaddingValues(0.dp),
-            uiState = DrinksUiState(cocktails = PreviewUtils.drinksList),
-            scaffoldState = rememberScaffoldState(),
-            onSearch = {},
-            onErrorDismissed = {},
+            cocktails = PreviewUtils.drinksList,
             onFavoriteStateChange = { _, _ -> },
             onFavoriteStatusCheck = { true }
         )
