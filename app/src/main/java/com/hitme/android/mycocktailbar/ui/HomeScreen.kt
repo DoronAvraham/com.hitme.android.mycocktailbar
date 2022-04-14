@@ -1,28 +1,19 @@
 package com.hitme.android.mycocktailbar.ui
 
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarResult
-import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,19 +23,16 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hitme.android.mycocktailbar.R
-import com.hitme.android.mycocktailbar.ui.compose.GlideImage
+import com.hitme.android.mycocktailbar.data.Cocktail
+import com.hitme.android.mycocktailbar.ui.compose.CocktailsList
 import com.hitme.android.mycocktailbar.ui.compose.PreviewUtils
 import com.hitme.android.mycocktailbar.ui.theme.MyCocktailBarTheme
 import com.hitme.android.mycocktailbar.ui.viewmodels.DrinksUiState
@@ -56,7 +44,9 @@ fun HomeScreen(
     uiState: DrinksUiState,
     scaffoldState: ScaffoldState,
     onSearch: (String) -> Unit,
-    onErrorDismissed: () -> Unit
+    onErrorDismissed: () -> Unit,
+    onFavoriteStateChange: (cocktail: Cocktail, isFavorite: Boolean) -> Unit,
+    onFavoriteStatusCheck: (cocktail: Cocktail) -> Boolean
 ) {
     Column(
         modifier = modifier
@@ -66,13 +56,11 @@ fun HomeScreen(
     ) {
         SearchBar(uiState.isLoading, onSearch)
         Spacer(modifier = Modifier.height(8.dp))
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            items(items = uiState.drinks, key = { drink -> drink.id }) {
-                ListItem(it.name, it.ingredients, it.thumbnailUrl)
-            }
-        }
+        CocktailsList(
+            cocktails = uiState.cocktails,
+            onFavoriteStateChange = onFavoriteStateChange,
+            onFavoriteStatusCheck = onFavoriteStatusCheck
+        )
     }
 
     if (uiState.errorMessageId > -1) {
@@ -138,71 +126,18 @@ fun SearchBar(isLoading: Boolean, onClick: (String) -> Unit) {
     }
 }
 
-@Composable
-fun ListItem(name: String, ingredients: List<String>, imageUrl: String) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(120.dp),
-        backgroundColor = MaterialTheme.colors.primary
-    ) {
-        Row {
-            GlideImage(
-                modifier = Modifier
-                    .size(140.dp, 120.dp)
-                    .clip(MaterialTheme.shapes.medium),
-                contentDescription = "",
-                data = imageUrl,
-                placeHolderDrawable = AppCompatResources.getDrawable(
-                    LocalContext.current,
-                    R.drawable.ic_launcher_foreground
-                ),
-                glideModifier = { requestBuilder ->
-                    requestBuilder.centerCrop()
-                }
-            )
-            Column(modifier = Modifier.padding(10.dp)) {
-                Text(
-                    text = name,
-                    color = MaterialTheme.colors.onSurface,
-                    modifier = Modifier.padding(bottom = 8.dp),
-                    fontWeight = FontWeight.Bold,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1
-                )
-                Text(
-                    text = ingredients.joinToString(),
-                    color = MaterialTheme.colors.onSurface,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 3
-                )
-            }
-        }
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+fun HomeScreenPreview() {
     MyCocktailBarTheme {
         HomeScreen(
             paddingValues = PaddingValues(0.dp),
-            uiState = DrinksUiState(isLoading = false, errorMessageId = -1, drinks = PreviewUtils.drinksList),
+            uiState = DrinksUiState(cocktails = PreviewUtils.drinksList),
             scaffoldState = rememberScaffoldState(),
             onSearch = {},
-            onErrorDismissed = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ListItemPreview() {
-    MyCocktailBarTheme {
-        ListItem(
-            name = "Margarita",
-            ingredients = PreviewUtils.ingredients,
-            imageUrl = ""
+            onErrorDismissed = {},
+            onFavoriteStateChange = { _, _ -> },
+            onFavoriteStatusCheck = { false }
         )
     }
 }

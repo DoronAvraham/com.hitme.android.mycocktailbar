@@ -18,6 +18,12 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
     }
 
     buildTypes {
@@ -39,6 +45,7 @@ android {
     }
     packagingOptions {
         resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+        resources.excludes.add("META-INF/atomicfu.kotlin_module")
     }
 }
 
@@ -52,6 +59,8 @@ dependencies {
     implementation(Libs.androidx_compose_navigation)
     implementation(Libs.androidx_core_ktx)
     implementation(Libs.androidx_hilt_navigation_compose)
+    implementation(Libs.androidx_room)
+    kapt(Libs.androidx_room_compiler)
     implementation(Libs.dagger_hilt)
     kapt(Libs.dagger_hilt_compiler)
     implementation(Libs.lifecycle_runtime_ktx)

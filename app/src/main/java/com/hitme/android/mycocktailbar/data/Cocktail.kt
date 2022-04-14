@@ -1,10 +1,14 @@
 package com.hitme.android.mycocktailbar.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@Entity(tableName = "cocktails")
 @Serializable
-data class Drink(
+data class Cocktail(
+    @PrimaryKey
     @SerialName("idDrink")
     val id: String = "",
     @SerialName("strDrink")

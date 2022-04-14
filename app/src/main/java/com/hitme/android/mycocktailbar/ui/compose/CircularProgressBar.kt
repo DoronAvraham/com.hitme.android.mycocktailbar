@@ -1,7 +1,6 @@
 package com.hitme.android.mycocktailbar.ui.compose
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -27,7 +26,7 @@ fun CircularProgressBar(
 @Preview(showBackground = false)
 @Composable
 private fun PreviewCircularProgressBar() {
-    MyCocktailBarTheme(darkTheme = true) {
-        CircularProgressBar(modifier = Modifier.fillMaxSize())
+    MyCocktailBarTheme(darkTheme = false) {
+        CircularProgressBar()
     }
 }

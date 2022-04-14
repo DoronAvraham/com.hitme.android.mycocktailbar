@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class CocktailsRepository @Inject constructor(private val cocktailsService: CocktailsService) {
+class CocktailsRemoteRepository @Inject constructor(private val cocktailsService: CocktailsService) {
 
-    fun getSearchResults(query: String): Flow<List<Drink>> {
+    fun getSearchResults(query: String): Flow<List<Cocktail>> {
         return flow {
             val response = cocktailsService.search(query)
             emit(response.drinks)

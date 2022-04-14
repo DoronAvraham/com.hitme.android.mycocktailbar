@@ -3,8 +3,9 @@ package com.hitme.android.mycocktailbar.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hitme.android.mycocktailbar.R
-import com.hitme.android.mycocktailbar.data.CocktailsRepository
-import com.hitme.android.mycocktailbar.data.Drink
+import com.hitme.android.mycocktailbar.data.Cocktail
+import com.hitme.android.mycocktailbar.data.CocktailsLocalRepository
+import com.hitme.android.mycocktailbar.data.CocktailsRemoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CocktailsListViewModel @Inject constructor(
-    private val repository: CocktailsRepository
+    private val remoteRepository: CocktailsRemoteRepository,
+    private val localRepository: CocktailsLocalRepository
 ) : ViewModel() {
 
     private var job: Job? = null
@@ -31,16 +33,17 @@ class CocktailsListViewModel @Inject constructor(
         // Show first results using the query "wine".
         // Later consider to use a different dedicated API (i.e. random or most popular).
         searchCocktail("wine")
+        getFavorites()
     }
 
     /**
      * Get [query] search results via cold flow and update the [_uiState] (hot flow).
      */
     fun searchCocktail(query: String) {
-        _uiState.update { it.copy(query = query, isLoading = true, drinks = emptyList()) }
+        _uiState.update { it.copy(query = query, isLoading = true, cocktails = emptyList()) }
         job?.cancel()
         job = viewModelScope.launch {
-            repository.getSearchResults(query)
+            remoteRepository.getSearchResults(query)
                 .catch { error ->
                     _uiState.update {
                         it.copy(
@@ -49,8 +52,24 @@ class CocktailsListViewModel @Inject constructor(
                         )
                     }
                 }
-                .collect { drinks -> _uiState.update { it.copy(isLoading = false, drinks = drinks) } }
+                .collect { drinks -> _uiState.update { it.copy(isLoading = false, cocktails = drinks) } }
         }
+    }
+
+    /**
+     * Add/Remove a cocktails from DB when favorite state changes.
+     */
+    fun onFavoriteStateChange(cocktail: Cocktail, isFavorite: Boolean) {
+        viewModelScope.launch {
+            localRepository.updateFavoriteState(cocktail, isFavorite)
+        }
+    }
+
+    /**
+     * Check if provided cocktails is in favorites lists.
+     */
+    fun onFavoriteStatusCheck(cocktail: Cocktail): Boolean {
+        return _uiState.value.favorites.contains(cocktail)
     }
 
     /**
@@ -60,6 +79,17 @@ class CocktailsListViewModel @Inject constructor(
         _uiState.update { it.copy(isLoading = false, errorMessageId = -1) }
     }
 
+    /**
+     * Establish a connection with the favorites DB using a Flow.
+     */
+    private fun getFavorites() {
+        viewModelScope.launch {
+            localRepository.getFavorites().collect { favorites ->
+                _uiState.update { it.copy(favorites = favorites) }
+            }
+        }
+    }
+
     private fun resolveErrorMessage(exception: Throwable): Int =
         if (exception is IOException) R.string.comm_error else R.string.generic_error
 }
@@ -67,13 +97,15 @@ class CocktailsListViewModel @Inject constructor(
 /**
  * UI state that is exposed and updated every time the internal state changes.
  *
- * @property drinks Results to display.
+ * @property cocktails Results to display.
+ * @property favorites Items marked by the user as favorites.
  * @property query Last executed search query.
  * @property isLoading True in case a current query is running. False otherwise.
  * @property errorMessageId Error message resource ID to display.
  */
 data class DrinksUiState(
-    val drinks: List<Drink> = emptyList(),
+    val cocktails: List<Cocktail> = emptyList(),
+    val favorites: List<Cocktail> = emptyList(),
     val query: String = "",
     val isLoading: Boolean = false,
     val errorMessageId: Int = -1

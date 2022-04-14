@@ -11,7 +11,7 @@ buildscript {
 }
 
 plugins {
-    id("com.android.application") version Versions.PLUGIN_APPLICATION apply false
+    id("com.android.application") version Versions.AGP apply false
     id("org.jetbrains.kotlin.android") version Versions.KOTLIN apply false
     id("org.jetbrains.kotlin.plugin.serialization") version Versions.KOTLIN apply false
 }

@@ -6,15 +6,16 @@ object AndroidVersions {
 
 object Versions {
     // Android dependencies
+    const val AGP = "7.1.3"
     const val ANDROIDX_APPCOMPAT = "1.4.1"
     const val ANDROIDX_CORE_KTX = "1.7.0"
     const val ANDROIDX_HILT = "1.0.0"
     const val ANDROIDX_NAVIGATION = "2.4.1"
     const val ANDROIDX_LIFECYCLE = "2.4.1"
-    const val COMPOSE = "1.1.1"
+    const val ANDROIDX_ROOM = "2.4.2"
+    const val COMPOSE = "1.2.0-alpha07"
     const val COMPOSE_ACTIVITY = "1.4.0"
     const val DAGGER_HILT = "2.40"
-    const val PLUGIN_APPLICATION = "7.1.2"
 
     // 3rd party dependencies
     const val GLIDE = "4.13.1"
@@ -41,6 +42,8 @@ object Libs {
     const val androidx_compose_material = "androidx.compose.material:material:${Versions.COMPOSE}"
     const val androidx_compose_navigation = "androidx.navigation:navigation-compose:${Versions.ANDROIDX_NAVIGATION}"
     const val androidx_hilt_navigation_compose = "androidx.hilt:hilt-navigation-compose:${Versions.ANDROIDX_HILT}"
+    const val androidx_room = "androidx.room:room-ktx:${Versions.ANDROIDX_ROOM}"
+    const val androidx_room_compiler = "androidx.room:room-compiler:${Versions.ANDROIDX_ROOM}"
     const val dagger_hilt = "com.google.dagger:hilt-android:${Versions.DAGGER_HILT}"
     const val dagger_hilt_compiler = "com.google.dagger:hilt-android-compiler:${Versions.DAGGER_HILT}"
     const val lifecycle_runtime_ktx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.ANDROIDX_LIFECYCLE}"

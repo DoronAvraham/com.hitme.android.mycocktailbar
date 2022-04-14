@@ -1,13 +1,10 @@
 package com.hitme.android.mycocktailbar.ui
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -28,6 +25,7 @@ fun NavGraph(
 ) {
     NavHost(navController = navController, startDestination = AppDestinations.HOME_SCREEN) {
         composable(AppDestinations.HOME_SCREEN) {
+            // TODO use same instance of CocktailsListViewModel for both screens.
             val cocktailsViewModel = hiltViewModel<CocktailsListViewModel>()
             val uiState by cocktailsViewModel.uiState.collectAsStateLifecycleAware()
             HomeScreen(
@@ -35,20 +33,23 @@ fun NavGraph(
                 paddingValues = paddingValues,
                 scaffoldState = scaffoldState,
                 onSearch = cocktailsViewModel::searchCocktail,
-                onErrorDismissed = cocktailsViewModel::onErrorDismissed
+                onErrorDismissed = cocktailsViewModel::onErrorDismissed,
+                onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
+                onFavoriteStatusCheck = cocktailsViewModel::onFavoriteStatusCheck
             )
             if (uiState.isLoading) {
                 CircularProgressBar(modifier = Modifier.fillMaxSize())
             }
         }
         composable(AppDestinations.FAVORITES_SCREEN) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                // TODO replace with the implementation of favorites screen.
-                Text(text = "Favorites screen")
-            }
+            val cocktailsViewModel = hiltViewModel<CocktailsListViewModel>()
+            val uiState by cocktailsViewModel.uiState.collectAsStateLifecycleAware()
+            FavoritesScreen(
+                cocktails = uiState.favorites,
+                paddingValues = paddingValues,
+                onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
+                onFavoriteStatusCheck = { true }
+            )
         }
     }
 }

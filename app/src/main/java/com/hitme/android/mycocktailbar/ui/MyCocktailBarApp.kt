@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
@@ -39,7 +40,7 @@ fun MyCocktailBarApp() {
 
 @Composable
 fun BottomNavBar(navigationActions: NavigationActions) {
-    var selectedIndex by remember { mutableStateOf(0) }
+    var selectedIndex by rememberSaveable { mutableStateOf(0) }
 
     BottomNavigation(elevation = 10.dp) {
         BottomNavigationItem(
