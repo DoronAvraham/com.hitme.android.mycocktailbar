@@ -35,7 +35,11 @@ fun MyCocktailBarApp() {
         val scaffoldState = rememberScaffoldState()
 
         Scaffold(scaffoldState = scaffoldState, bottomBar = { BottomNavBar(navigationActions) }) {
-            NavGraph(paddingValues = it, navController = navController, scaffoldState = scaffoldState)
+            NavGraph(
+                paddingValues = it,
+                navController = navController,
+                scaffoldState = scaffoldState
+            )
         }
     }
 }

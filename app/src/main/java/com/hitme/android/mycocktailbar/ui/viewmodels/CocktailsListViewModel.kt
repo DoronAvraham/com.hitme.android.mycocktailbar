@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CocktailsListViewModel @Inject constructor(
     private val remoteRepository: CocktailsRemoteRepository,
-    private val localRepository: CocktailsLocalRepository
+    private val localRepository: CocktailsLocalRepository,
 ) : ViewModel() {
 
     private var job: Job? = null
@@ -59,17 +59,17 @@ class CocktailsListViewModel @Inject constructor(
     /**
      * Add/Remove a cocktails from DB when favorite state changes.
      */
-    fun onFavoriteStateChange(cocktail: Cocktail, isFavorite: Boolean) {
+    fun onFavoriteStateChange(cocktailId: String, isFavorite: Boolean) {
         viewModelScope.launch {
-            localRepository.updateFavoriteState(cocktail, isFavorite)
+            getCocktailById(cocktailId)?.apply { localRepository.updateFavoriteState(this, isFavorite) }
         }
     }
 
     /**
      * Check if provided cocktails is in favorites lists.
      */
-    fun onFavoriteStatusCheck(cocktail: Cocktail): Boolean {
-        return _uiState.value.favorites.contains(cocktail)
+    fun onFavoriteStatusCheck(cocktailId: String): Boolean {
+        return _uiState.value.favorites.any { it.id == cocktailId }
     }
 
     /**
@@ -77,6 +77,14 @@ class CocktailsListViewModel @Inject constructor(
      */
     fun onErrorDismissed() {
         _uiState.update { it.copy(isLoading = false, errorMessageId = -1) }
+    }
+
+    fun getCocktailById(id: String): Cocktail? {
+        return (_uiState.value.favorites + _uiState.value.cocktails).find { it.id == id }
+    }
+
+    fun onCocktailSelected(cocktail: Cocktail) {
+        _uiState.update { it.copy(selectedCocktail = cocktail) }
     }
 
     /**
@@ -108,5 +116,6 @@ data class DrinksUiState(
     val favorites: List<Cocktail> = emptyList(),
     val query: String = "",
     val isLoading: Boolean = false,
-    val errorMessageId: Int = -1
+    val errorMessageId: Int = -1,
+    val selectedCocktail: Cocktail = Cocktail()
 )

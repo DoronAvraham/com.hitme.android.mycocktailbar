@@ -45,8 +45,9 @@ fun HomeScreen(
     scaffoldState: ScaffoldState,
     onSearch: (String) -> Unit,
     onErrorDismissed: () -> Unit,
-    onFavoriteStateChange: (cocktail: Cocktail, isFavorite: Boolean) -> Unit,
-    onFavoriteStatusCheck: (cocktail: Cocktail) -> Boolean
+    onListItemClick: (cocktail: Cocktail) -> Unit,
+    onFavoriteStateChange: (itemId: String, isFavorite: Boolean) -> Unit,
+    onFavoriteStatusCheck: (itemId: String) -> Boolean
 ) {
     Column(
         modifier = modifier
@@ -58,6 +59,7 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(8.dp))
         CocktailsList(
             cocktails = uiState.cocktails,
+            onListItemClick = onListItemClick,
             onFavoriteStateChange = onFavoriteStateChange,
             onFavoriteStatusCheck = onFavoriteStatusCheck
         )
@@ -136,6 +138,7 @@ fun HomeScreenPreview() {
             scaffoldState = rememberScaffoldState(),
             onSearch = {},
             onErrorDismissed = {},
+            onListItemClick = { },
             onFavoriteStateChange = { _, _ -> },
             onFavoriteStatusCheck = { false }
         )

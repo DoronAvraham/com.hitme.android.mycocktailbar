@@ -7,6 +7,13 @@ import com.hitme.android.mycocktailbar.data.Cocktail
  */
 object PreviewUtils {
 
+    val cocktail: Cocktail = Cocktail(
+        id = "100",
+        name = "Preview Cocktail",
+        instructions = "Mix all and drink",
+        ingredients = listOf("Sugar", "Salt", "Ice", "Lime")
+    )
+
     val drinksList: List<Cocktail>
         get() {
             val list = mutableListOf<Cocktail>()

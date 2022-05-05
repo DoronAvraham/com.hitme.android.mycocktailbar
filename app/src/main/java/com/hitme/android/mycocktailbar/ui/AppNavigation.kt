@@ -9,6 +9,7 @@ import com.hitme.android.mycocktailbar.ui.AppDestinations.HOME_SCREEN
 object AppDestinations {
     const val HOME_SCREEN = "home"
     const val FAVORITES_SCREEN = "favorites"
+    const val DETAILS_SCREEN = "details"
 }
 
 /**

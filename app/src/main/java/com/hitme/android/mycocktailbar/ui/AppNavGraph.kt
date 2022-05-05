@@ -21,7 +21,7 @@ import com.hitme.android.mycocktailbar.ui.viewmodels.CocktailsListViewModel
 fun NavGraph(
     navController: NavHostController,
     paddingValues: PaddingValues,
-    scaffoldState: ScaffoldState
+    scaffoldState: ScaffoldState,
 ) {
     val cocktailsViewModel = hiltViewModel<CocktailsListViewModel>()
     val uiState by cocktailsViewModel.uiState.collectAsStateLifecycleAware()
@@ -34,7 +34,9 @@ fun NavGraph(
                 onSearch = cocktailsViewModel::searchCocktail,
                 onErrorDismissed = cocktailsViewModel::onErrorDismissed,
                 onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
-                onFavoriteStatusCheck = cocktailsViewModel::onFavoriteStatusCheck
+                onFavoriteStatusCheck = cocktailsViewModel::onFavoriteStatusCheck,
+                onListItemClick = cocktailsViewModel::onCocktailSelected
+
             )
             if (uiState.isLoading) {
                 CircularProgressBar(modifier = Modifier.fillMaxSize())
@@ -42,10 +44,11 @@ fun NavGraph(
         }
         composable(AppDestinations.FAVORITES_SCREEN) {
             FavoritesScreen(
-                cocktails = uiState.favorites,
+                favorites = uiState.favorites,
                 paddingValues = paddingValues,
                 onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
-                onFavoriteStatusCheck = { true }
+                onFavoriteStatusCheck = { true },
+                onListItemClick = cocktailsViewModel::onCocktailSelected
             )
         }
     }

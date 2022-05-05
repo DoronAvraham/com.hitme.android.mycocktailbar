@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -13,15 +12,15 @@ import com.hitme.android.mycocktailbar.data.Cocktail
 import com.hitme.android.mycocktailbar.ui.compose.CocktailsList
 import com.hitme.android.mycocktailbar.ui.compose.PreviewUtils
 import com.hitme.android.mycocktailbar.ui.theme.MyCocktailBarTheme
-import com.hitme.android.mycocktailbar.ui.viewmodels.DrinksUiState
 
 @Composable
 fun FavoritesScreen(
-    cocktails: List<Cocktail>,
+    favorites: List<Cocktail>,
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues,
-    onFavoriteStateChange: (cocktail: Cocktail, isFavorite: Boolean) -> Unit,
-    onFavoriteStatusCheck: (cocktail: Cocktail) -> Boolean
+    onListItemClick: (cocktail: Cocktail) -> Unit,
+    onFavoriteStateChange: (itemId: String, isFavorite: Boolean) -> Unit,
+    onFavoriteStatusCheck: (itemId: String) -> Boolean
 ) {
     Column(
         modifier = modifier
@@ -30,7 +29,8 @@ fun FavoritesScreen(
             .padding(paddingValues)
     ) {
         CocktailsList(
-            cocktails = cocktails,
+            cocktails = favorites,
+            onListItemClick = onListItemClick,
             onFavoriteStateChange = onFavoriteStateChange,
             onFavoriteStatusCheck = onFavoriteStatusCheck
         )
@@ -43,7 +43,8 @@ fun FavoritesScreenPreview() {
     MyCocktailBarTheme {
         FavoritesScreen(
             paddingValues = PaddingValues(0.dp),
-            cocktails = PreviewUtils.drinksList,
+            favorites = PreviewUtils.drinksList,
+            onListItemClick = { },
             onFavoriteStateChange = { _, _ -> },
             onFavoriteStatusCheck = { true }
         )
