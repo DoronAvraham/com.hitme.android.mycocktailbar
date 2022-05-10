@@ -5,20 +5,16 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.hitme.android.mycocktailbar.R
 import com.hitme.android.mycocktailbar.ui.theme.MyCocktailBarTheme
 
 /**
@@ -34,7 +30,7 @@ fun MyCocktailBarApp() {
         }
         val scaffoldState = rememberScaffoldState()
 
-        Scaffold(scaffoldState = scaffoldState, bottomBar = { BottomNavBar(navigationActions) }) {
+        Scaffold(scaffoldState = scaffoldState, bottomBar = { BottomNavBar(navController, navigationActions) }) {
             NavGraph(
                 paddingValues = it,
                 navController = navController,
@@ -45,33 +41,23 @@ fun MyCocktailBarApp() {
 }
 
 @Composable
-fun BottomNavBar(navigationActions: NavigationActions) {
-    var selectedIndex by rememberSaveable { mutableStateOf(0) }
+fun BottomNavBar(navController: NavHostController, navigationActions: NavigationActions) {
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    val screens = listOf(BottomNavScreen.Home, BottomNavScreen.Favorites)
 
     BottomNavigation(elevation = 10.dp) {
-        BottomNavigationItem(
-            label = { Text(text = stringResource(R.string.nav_btn_home)) },
-            enabled = selectedIndex != 0,
-            selected = selectedIndex == 0,
-            icon = {
-                Icon(imageVector = Icons.Default.Home, "")
-            },
-            onClick = {
-                selectedIndex = 0
-                navigationActions.navigateToHomeScreen()
-            }
-        )
-        BottomNavigationItem(
-            label = { Text(stringResource(R.string.nav_btn_favorites)) },
-            enabled = selectedIndex != 1,
-            selected = selectedIndex == 1,
-            icon = {
-                Icon(imageVector = Icons.Default.Favorite, "")
-            },
-            onClick = {
-                selectedIndex = 1
-                navigationActions.navigateToFavoritesScreen()
-            }
-        )
+        screens.forEach { screen ->
+            val currentScreen = currentDestination?.hierarchy?.any { it.route == screen.destination } == true
+            BottomNavigationItem(
+                icon = { Icon(imageVector = screen.image, "") },
+                label = { Text(text = stringResource(screen.resourceId)) },
+                selected = currentScreen,
+                enabled = !currentScreen,
+                onClick = { navigationActions.navigate(screen.destination) }
+            )
+        }
     }
 }
