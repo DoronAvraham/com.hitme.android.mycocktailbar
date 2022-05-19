@@ -16,6 +16,10 @@ object DrinkTransformationSerializer : JsonTransformingSerializer<Cocktail>(Cock
     override fun transformDeserialize(element: JsonElement): JsonElement {
         val ingredients = asList("strIngredient", element as JsonObject)
         val measures = asList("strMeasure", element)
+        // Add padding to prevent IndexOutOfBoundException.
+        while (ingredients.size > measures.size) {
+            measures.add(JsonPrimitive(""))
+        }
 
         return JsonObject(
             element.toMutableMap().apply {
@@ -25,8 +29,9 @@ object DrinkTransformationSerializer : JsonTransformingSerializer<Cocktail>(Cock
         )
     }
 
-    private fun asList(prefix: String, jsonObject: JsonObject): List<JsonPrimitive> {
+    private fun asList(prefix: String, jsonObject: JsonObject): MutableList<JsonPrimitive> {
         val list = mutableListOf<JsonPrimitive>()
+        // There are max 15 items of each type.
         for (count in 1..15) {
             val item: String? = jsonObject["$prefix$count"]?.toString()
             if (item.equals("null") || item.isNullOrEmpty()) {
