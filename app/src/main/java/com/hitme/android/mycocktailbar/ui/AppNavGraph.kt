@@ -22,6 +22,7 @@ fun NavGraph(
     navController: NavHostController,
     paddingValues: PaddingValues,
     scaffoldState: ScaffoldState,
+    navigationActions: NavigationActions
 ) {
     val cocktailsViewModel = hiltViewModel<CocktailsListViewModel>()
     val uiState by cocktailsViewModel.uiState.collectAsStateLifecycleAware()
@@ -35,8 +36,10 @@ fun NavGraph(
                 onErrorDismissed = cocktailsViewModel::onErrorDismissed,
                 onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
                 onFavoriteStatusCheck = cocktailsViewModel::onFavoriteStatusCheck,
-                onListItemClick = cocktailsViewModel::onCocktailSelected
-
+                onListItemClick = { cocktail ->
+                    cocktailsViewModel.onCocktailSelected(cocktail)
+                    navigationActions.navigate(AppDestinations.DETAILS_SCREEN)
+                }
             )
             if (uiState.isLoading) {
                 CircularProgressBar(modifier = Modifier.fillMaxSize())
@@ -48,7 +51,17 @@ fun NavGraph(
                 paddingValues = paddingValues,
                 onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
                 onFavoriteStatusCheck = { true },
-                onListItemClick = cocktailsViewModel::onCocktailSelected
+                onListItemClick = { cocktail ->
+                    cocktailsViewModel.onCocktailSelected(cocktail)
+                    navigationActions.navigate(AppDestinations.DETAILS_SCREEN)
+                }
+            )
+        }
+        composable(AppDestinations.DETAILS_SCREEN) {
+            DetailsScreen(
+                cocktail = uiState.selectedCocktail,
+                onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
+                onFavoriteStatusCheck = cocktailsViewModel::onFavoriteStatusCheck,
             )
         }
     }

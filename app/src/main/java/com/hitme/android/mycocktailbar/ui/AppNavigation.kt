@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.hitme.android.mycocktailbar.R
+import com.hitme.android.mycocktailbar.ui.AppDestinations.Companion.DETAILS_SCREEN
 import com.hitme.android.mycocktailbar.ui.AppDestinations.Companion.FAVORITES_SCREEN
 import com.hitme.android.mycocktailbar.ui.AppDestinations.Companion.HOME_SCREEN
 
@@ -16,12 +17,13 @@ import com.hitme.android.mycocktailbar.ui.AppDestinations.Companion.HOME_SCREEN
  * Destinations used in the application.
  */
 @Retention(AnnotationRetention.SOURCE)
-@StringDef(HOME_SCREEN, FAVORITES_SCREEN)
+@StringDef(HOME_SCREEN, FAVORITES_SCREEN, DETAILS_SCREEN)
 annotation class AppDestinations {
 
     companion object {
         const val HOME_SCREEN = "home"
         const val FAVORITES_SCREEN = "favorites"
+        const val DETAILS_SCREEN = "details"
     }
 }
 
@@ -43,6 +45,11 @@ class NavigationActions(private val navController: NavHostController) {
             launchSingleTop = true
             // Restore state when reselecting a previously selected item
             restoreState = true
+        }
+    }
+    val navigateToDetailsScreen: () -> Unit = {
+        navController.navigate(AppDestinations.DETAILS_SCREEN) {
+            launchSingleTop = true
         }
     }
 }

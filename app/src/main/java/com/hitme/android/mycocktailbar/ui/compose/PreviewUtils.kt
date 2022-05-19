@@ -11,7 +11,8 @@ object PreviewUtils {
         id = "100",
         name = "Preview Cocktail",
         instructions = "Mix all and drink",
-        ingredients = listOf("Sugar", "Salt", "Ice", "Lime")
+        ingredients = listOf("Sugar", "Salt", "Ice", "Lime"),
+        measures = listOf("2cp", "1cp", "3pc", "1pc"),
     )
 
     val drinksList: List<Cocktail>
