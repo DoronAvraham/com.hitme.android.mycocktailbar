@@ -1,6 +1,9 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+
 plugins {
     id(Plugins.APPLICATION)
     id(Plugins.DAGGER_HILT)
+    id(Plugins.DEPENDENCY_UPDATER)
     kotlin(Plugins.KOTLIN_ANDROID)
     kotlin(Plugins.KOTLIN_KAPT)
     kotlin(Plugins.KOTLIN_SERIALIZATION)
@@ -80,4 +83,19 @@ dependencies {
     androidTestImplementation(Libs.androidx_junit)
     androidTestImplementation(Libs.androidx_espresso)
     androidTestImplementation(Libs.androidx_compose_ui_test)
+}
+
+// running "./gradlew app:dependencyUpdates" will produce a list of all updatable dependencies.
+// https://github.com/ben-manes/gradle-versions-plugin
+// We filter out non wanted versions.
+tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
+
+    val nonStableTags = listOf("alpha", "beta", "rc")
+
+    fun isNonStable(version: String) = nonStableTags.any { tag -> version.contains(tag, ignoreCase = true) }
+
+    // Prevents from updating from stable to non-stable version.
+    rejectVersionIf {
+        isNonStable(candidate.version) && !isNonStable(currentVersion)
+    }
 }

@@ -18,6 +18,7 @@ object Versions {
     const val DAGGER_HILT = "2.40"
 
     // 3rd party dependencies
+    const val DEPENDENCY_UPDATER = "0.42.0"
     const val GLIDE = "4.13.1"
     const val KOTLIN = "1.6.10"
     const val KOTLINX_COROUTINES = "1.6.0"
@@ -68,6 +69,7 @@ object Libs {
 object Plugins {
     const val APPLICATION = "com.android.application"
     const val DAGGER_HILT = "dagger.hilt.android.plugin"
+    const val DEPENDENCY_UPDATER = "com.github.ben-manes.versions"
     const val KOTLIN_ANDROID = "android"
     const val KOTLIN_KAPT = "kapt"
     const val KOTLIN_SERIALIZATION = "plugin.serialization"
