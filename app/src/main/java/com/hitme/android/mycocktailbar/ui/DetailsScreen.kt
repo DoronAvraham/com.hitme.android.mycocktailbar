@@ -79,7 +79,7 @@ fun DetailsScreen(
                     "$ingredient ${cocktail.measures[index]}"
                 }
                 ingredients.forEach {
-                    Text(text = it, modifier = Modifier.padding(5.dp))
+                    Text(text = it, modifier = Modifier.padding(5.dp), color = MaterialTheme.colors.onSurface)
                 }
             }
         }
@@ -92,7 +92,11 @@ fun DetailsScreen(
             backgroundColor = MaterialTheme.colors.primary
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
-                Text(text = cocktail.instructions, modifier = Modifier.padding(10.dp))
+                Text(
+                    text = cocktail.instructions,
+                    modifier = Modifier.padding(10.dp),
+                    color = MaterialTheme.colors.onSurface,
+                )
             }
         }
     }
