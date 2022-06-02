@@ -3,6 +3,7 @@ package com.hitme.android.mycocktailbar.ui
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
@@ -44,11 +45,11 @@ fun BottomNavBar(currentRoute: String?, navigationActions: NavigationActions) {
     val screens = listOf(BottomNavScreen.Home, BottomNavScreen.Favorites, BottomNavScreen.Settings)
 
     if (screens.any { it.destination == currentRoute }) {
-        BottomNavigation(elevation = 10.dp) {
+        BottomNavigation(elevation = 10.dp, backgroundColor = MaterialTheme.colors.primary) {
             screens.forEach { screen ->
                 BottomNavigationItem(
-                    icon = { Icon(imageVector = screen.image, "") },
-                    label = { Text(text = stringResource(screen.resourceId)) },
+                    icon = { Icon(imageVector = screen.image, "", tint = MaterialTheme.colors.onBackground) },
+                    label = { Text(text = stringResource(screen.resourceId), color = MaterialTheme.colors.onSurface) },
                     selected = currentRoute == screen.destination,
                     enabled = currentRoute != screen.destination,
                     onClick = { navigationActions.navigate(screen.destination) }
