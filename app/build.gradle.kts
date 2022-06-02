@@ -61,6 +61,7 @@ dependencies {
     implementation(Libs.androidx_compose_material)
     implementation(Libs.androidx_compose_navigation)
     implementation(Libs.androidx_core_ktx)
+    implementation(Libs.androidx_datastore)
     implementation(Libs.androidx_hilt_navigation_compose)
     implementation(Libs.androidx_room)
     kapt(Libs.androidx_room_compiler)

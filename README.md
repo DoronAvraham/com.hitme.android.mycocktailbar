@@ -28,6 +28,7 @@ Libraries Used
     * [Room][6] - Access your app's SQLite database with in-app objects and compile-time checks.
     * [ViewModel][7] - Store UI-related data that isn't destroyed on app rotations. Easily schedule
       asynchronous tasks for optimal execution.
+    * [DataStore][16] - Data persistence library.  
 * [UI][8] - Details on why and how to use UI Components in your apps - together or separate
     * [Compose][9] - A basic unit of composable UI.
 * Third party and miscellaneous libraries
@@ -54,3 +55,4 @@ Libraries Used
 [13]: https://kotlinlang.org/docs/reference/coroutines-overview.html
 [14]: https://developer.android.com/kotlin/flow
 [15]: https://github.com/square/retrofit
+[16]: https://developer.android.com/topic/libraries/architecture/datastore

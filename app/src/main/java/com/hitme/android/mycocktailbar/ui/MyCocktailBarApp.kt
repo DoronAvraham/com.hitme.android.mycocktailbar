@@ -13,39 +13,35 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.hitme.android.mycocktailbar.ui.theme.MyCocktailBarTheme
 
 /**
  * Main App UI entry point.
  */
 @Composable
 fun MyCocktailBarApp() {
-    MyCocktailBarTheme(darkTheme = true) {
+    val navController = rememberNavController()
+    val navigationActions = remember(navController) {
+        NavigationActions(navController)
+    }
+    val scaffoldState = rememberScaffoldState()
 
-        val navController = rememberNavController()
-        val navigationActions = remember(navController) {
-            NavigationActions(navController)
-        }
-        val scaffoldState = rememberScaffoldState()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination?.route
 
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentDestination = navBackStackEntry?.destination?.route
-
-        Scaffold(scaffoldState = scaffoldState, bottomBar = { BottomNavBar(currentDestination, navigationActions) }) {
-            NavGraph(
-                paddingValues = it,
-                navController = navController,
-                scaffoldState = scaffoldState,
-                navigationActions = navigationActions
-            )
-        }
+    Scaffold(scaffoldState = scaffoldState, bottomBar = { BottomNavBar(currentDestination, navigationActions) }) {
+        NavGraph(
+            paddingValues = it,
+            navController = navController,
+            scaffoldState = scaffoldState,
+            navigationActions = navigationActions
+        )
     }
 }
 
 @Composable
 fun BottomNavBar(currentRoute: String?, navigationActions: NavigationActions) {
 
-    val screens = listOf(BottomNavScreen.Home, BottomNavScreen.Favorites)
+    val screens = listOf(BottomNavScreen.Home, BottomNavScreen.Favorites, BottomNavScreen.Settings)
 
     if (screens.any { it.destination == currentRoute }) {
         BottomNavigation(elevation = 10.dp) {

@@ -64,5 +64,8 @@ fun NavGraph(
                 onFavoriteStatusCheck = cocktailsViewModel::onFavoriteStatusCheck,
             )
         }
+        composable(AppDestinations.SETTINGS_SCREEN) {
+            SettingsScreen()
+        }
     }
 }

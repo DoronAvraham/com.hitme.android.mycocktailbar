@@ -5,6 +5,7 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -12,18 +13,20 @@ import com.hitme.android.mycocktailbar.R
 import com.hitme.android.mycocktailbar.ui.AppDestinations.Companion.DETAILS_SCREEN
 import com.hitme.android.mycocktailbar.ui.AppDestinations.Companion.FAVORITES_SCREEN
 import com.hitme.android.mycocktailbar.ui.AppDestinations.Companion.HOME_SCREEN
+import com.hitme.android.mycocktailbar.ui.AppDestinations.Companion.SETTINGS_SCREEN
 
 /**
  * Destinations used in the application.
  */
 @Retention(AnnotationRetention.SOURCE)
-@StringDef(HOME_SCREEN, FAVORITES_SCREEN, DETAILS_SCREEN)
+@StringDef(HOME_SCREEN, FAVORITES_SCREEN, DETAILS_SCREEN, SETTINGS_SCREEN)
 annotation class AppDestinations {
 
     companion object {
         const val HOME_SCREEN = "home"
         const val FAVORITES_SCREEN = "favorites"
         const val DETAILS_SCREEN = "details"
+        const val SETTINGS_SCREEN = "settings"
     }
 }
 
@@ -47,11 +50,6 @@ class NavigationActions(private val navController: NavHostController) {
             restoreState = true
         }
     }
-    val navigateToDetailsScreen: () -> Unit = {
-        navController.navigate(AppDestinations.DETAILS_SCREEN) {
-            launchSingleTop = true
-        }
-    }
 }
 
 /**
@@ -60,4 +58,5 @@ class NavigationActions(private val navController: NavHostController) {
 sealed class BottomNavScreen(val destination: String, @StringRes val resourceId: Int, val image: ImageVector) {
     object Home : BottomNavScreen(HOME_SCREEN, R.string.nav_btn_home, Icons.Default.Home)
     object Favorites : BottomNavScreen(FAVORITES_SCREEN, R.string.nav_btn_favorites, Icons.Default.Favorite)
+    object Settings : BottomNavScreen(SETTINGS_SCREEN, R.string.nav_btn_settings, Icons.Default.Settings)
 }
