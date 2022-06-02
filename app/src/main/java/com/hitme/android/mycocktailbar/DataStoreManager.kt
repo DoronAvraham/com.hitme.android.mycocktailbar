@@ -19,7 +19,7 @@ class DataStoreManager(private val context: Context) {
     companion object {
         private const val DATASTORE_NAME = "app_preferences"
 
-        private val DARK_MODE_KEY = booleanPreferencesKey("dark_mode_key");
+        private val DARK_MODE_KEY = booleanPreferencesKey("dark_mode_key")
 
         private val Context.appPrefs by preferencesDataStore(
             name = DATASTORE_NAME
