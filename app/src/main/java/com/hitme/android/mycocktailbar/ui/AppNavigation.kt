@@ -59,4 +59,8 @@ sealed class BottomNavScreen(val destination: String, @StringRes val resourceId:
     object Home : BottomNavScreen(HOME_SCREEN, R.string.nav_btn_home, Icons.Default.Home)
     object Favorites : BottomNavScreen(FAVORITES_SCREEN, R.string.nav_btn_favorites, Icons.Default.Favorite)
     object Settings : BottomNavScreen(SETTINGS_SCREEN, R.string.nav_btn_settings, Icons.Default.Settings)
+
+    companion object {
+        val screens = listOf(Home, Favorites, Settings)
+    }
 }
