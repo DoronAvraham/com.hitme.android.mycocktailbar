@@ -60,6 +60,14 @@ fun MyCocktailBarApp() {
             TopAppBar(contentPadding = PaddingValues(), backgroundColor = MaterialTheme.colors.background) {
                 if (currentDestination == AppDestinations.HOME_SCREEN) {
                     SearchBar(Modifier.fillMaxWidth(), uiState.isLoading, cocktailsViewModel::searchCocktail)
+                } else if (currentDestination == AppDestinations.DETAILS_SCREEN) {
+                    DetailsTitleBar(
+                        title = uiState.selectedCocktail.name,
+                        cocktailId = uiState.selectedCocktail.id,
+                        favorites = uiState.favorites,
+                        onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
+                        onBackClicked = { navController.navigateUp() }
+                    )
                 } else {
                     TitleBar(currentDestination)
                 }
@@ -107,7 +115,7 @@ fun SearchBar(modifier: Modifier = Modifier, isLoading: Boolean, onClick: (Strin
                 },
                 enabled = text.value.isNotEmpty() && !isLoading
             ) {
-                Icon(imageVector = Icons.Filled.Search, "", tint = MaterialTheme.colors.onBackground)
+                Icon(imageVector = Icons.Default.Search, "", tint = MaterialTheme.colors.onBackground)
             }
         },
         textStyle = TextStyle(color = MaterialTheme.colors.onSurface),

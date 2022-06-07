@@ -57,9 +57,7 @@ fun NavGraph(
         }
         composable(AppDestinations.DETAILS_SCREEN) {
             DetailsScreen(
-                cocktail = uiState.selectedCocktail,
-                onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
-                onFavoriteStatusCheck = cocktailsViewModel::onFavoriteStatusCheck,
+                cocktail = uiState.selectedCocktail
             )
         }
         composable(AppDestinations.SETTINGS_SCREEN) {

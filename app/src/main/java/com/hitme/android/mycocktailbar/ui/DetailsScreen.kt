@@ -12,8 +12,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,9 +34,7 @@ import com.hitme.android.mycocktailbar.ui.theme.MyCocktailBarTheme
 
 @Composable
 fun DetailsScreen(
-    cocktail: Cocktail,
-    onFavoriteStateChange: (itemId: String, isFavorite: Boolean) -> Unit,
-    onFavoriteStatusCheck: (itemId: String) -> Boolean
+    cocktail: Cocktail
 ) {
     Column(
         modifier = Modifier
@@ -41,17 +43,6 @@ fun DetailsScreen(
             .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text(text = cocktail.name, Modifier.weight(1f))
-            FavoriteButton(
-                itemId = cocktail.id,
-                isFavorite = onFavoriteStatusCheck(cocktail.id),
-                onFavoriteStateChange = onFavoriteStateChange
-            )
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
         GlideImage(
             modifier = Modifier
                 .size(140.dp, 120.dp)
@@ -102,14 +93,42 @@ fun DetailsScreen(
     }
 }
 
+@Composable
+fun DetailsTitleBar(
+    modifier: Modifier = Modifier,
+    title: String,
+    cocktailId: String,
+    favorites: List<Cocktail>,
+    onFavoriteStateChange: (itemId: String, isFavorite: Boolean) -> Unit,
+    onBackClicked: () -> Unit
+) {
+    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
+        IconButton(
+            onClick = onBackClicked,
+        ) {
+            Icon(imageVector = Icons.Default.ArrowBack, "", tint = MaterialTheme.colors.onBackground)
+        }
+
+        Text(
+            modifier = Modifier.weight(1f),
+            text = title,
+            color = MaterialTheme.colors.onSurface
+        )
+
+        FavoriteButton(
+            itemId = cocktailId,
+            isFavorite = favorites.any { it.id == cocktailId },
+            onFavoriteStateChange = onFavoriteStateChange
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DetailsScreenPreview() {
     MyCocktailBarTheme {
         DetailsScreen(
-            cocktail = PreviewUtils.cocktail,
-            onFavoriteStateChange = { _, _ -> },
-            onFavoriteStatusCheck = { false }
+            cocktail = PreviewUtils.cocktail
         )
     }
 }
