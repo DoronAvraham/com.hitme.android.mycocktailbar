@@ -1,12 +1,12 @@
 object AndroidVersions {
     const val MIN_SDK = 23
-    const val TARGET_SDK = 31
-    const val COMPILE_SDK = 31
+    const val TARGET_SDK = 32
+    const val COMPILE_SDK = 32
 }
 
 object Versions {
     // Android dependencies
-    const val AGP = "7.2.0"
+    const val AGP = "7.2.1"
     const val ANDROIDX_APPCOMPAT = "1.4.1"
     const val ANDROIDX_CORE_KTX = "1.7.0"
     const val ANDROIDX_DATASTORE = "1.0.0"
@@ -14,7 +14,7 @@ object Versions {
     const val ANDROIDX_NAVIGATION = "2.4.2"
     const val ANDROIDX_LIFECYCLE = "2.4.1"
     const val ANDROIDX_ROOM = "2.4.2"
-    const val COMPOSE = "1.2.0-beta02"
+    const val COMPOSE = "1.2.0-beta03"
     const val COMPOSE_ACTIVITY = "1.4.0"
     const val DAGGER_HILT = "2.42"
 
