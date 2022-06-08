@@ -66,7 +66,7 @@ fun MyCocktailBarApp() {
                         cocktailId = uiState.selectedCocktail.id,
                         favorites = uiState.favorites,
                         onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
-                        onBackClicked = { navController.navigateUp() }
+                        onBackClicked = navController::navigateUp
                     )
                 } else {
                     TitleBar(currentDestination)
