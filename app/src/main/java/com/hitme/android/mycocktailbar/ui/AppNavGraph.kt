@@ -1,7 +1,9 @@
 package com.hitme.android.mycocktailbar.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,7 +26,11 @@ fun NavGraph(
     cocktailsViewModel: CocktailsListViewModel,
     uiState: DrinksUiState
 ) {
-    NavHost(navController = navController, startDestination = AppDestinations.HOME_SCREEN) {
+    NavHost(
+        modifier = Modifier.background(MaterialTheme.colors.background),
+        navController = navController,
+        startDestination = AppDestinations.HOME_SCREEN
+    ) {
         composable(AppDestinations.HOME_SCREEN) {
             HomeScreen(
                 uiState = uiState,

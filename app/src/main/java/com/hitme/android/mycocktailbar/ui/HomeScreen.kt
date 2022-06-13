@@ -4,15 +4,31 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarResult
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hitme.android.mycocktailbar.R
@@ -69,6 +85,48 @@ fun HomeScreen(
     }
 }
 
+@Composable
+fun SearchBar(modifier: Modifier = Modifier, isLoading: Boolean, onClick: (String) -> Unit) {
+    val text = rememberSaveable { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
+
+    TextField(
+        modifier = modifier,
+        value = text.value,
+        label = { Text(text = stringResource(R.string.search), color = MaterialTheme.colors.onPrimary) },
+        leadingIcon = {
+            IconButton(
+                onClick = {
+                    onClick(text.value)
+                    focusManager.clearFocus()
+                },
+                enabled = text.value.isNotEmpty() && !isLoading
+            ) {
+                Icon(imageVector = Icons.Default.Search, "", tint = MaterialTheme.colors.onPrimary)
+            }
+        },
+        textStyle = TextStyle(color = MaterialTheme.colors.onBackground),
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = MaterialTheme.colors.primary,
+            focusedIndicatorColor = MaterialTheme.colors.onPrimary,
+            unfocusedIndicatorColor = MaterialTheme.colors.onPrimary,
+            cursorColor = MaterialTheme.colors.onPrimary
+        ),
+        onValueChange = { text.value = it },
+        enabled = !isLoading,
+        singleLine = true,
+        keyboardOptions = KeyboardOptions.Default.copy(
+            autoCorrect = false,
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Search
+        ),
+        keyboardActions = KeyboardActions(onSearch = {
+            onClick(text.value)
+            focusManager.clearFocus()
+        })
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
@@ -79,9 +137,17 @@ fun HomeScreenPreview() {
             scaffoldState = rememberScaffoldState(),
             onSearch = {},
             onErrorDismissed = {},
-            onListItemClick = { },
+            onListItemClick = {},
             onFavoriteStateChange = { _, _ -> },
             onFavoriteStatusCheck = { false }
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SearchBarPreview() {
+    MyCocktailBarTheme {
+        SearchBar(isLoading = false, onClick = {})
     }
 }

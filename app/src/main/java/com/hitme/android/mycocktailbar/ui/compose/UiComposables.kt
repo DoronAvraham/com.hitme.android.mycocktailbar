@@ -67,7 +67,7 @@ fun ListItem(
             .fillMaxWidth()
             .height(120.dp)
             .clickable { onClick(cocktail) },
-        backgroundColor = MaterialTheme.colors.primary
+        backgroundColor = MaterialTheme.colors.surface
     ) {
         Row {
             GlideImage(
@@ -117,7 +117,7 @@ fun ListItem(
 @Composable
 fun FavoriteButton(
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colors.secondary,
+    color: Color = MaterialTheme.colors.primaryVariant,
     itemId: String,
     isFavorite: Boolean,
     onFavoriteStateChange: (itemId: String, isFavorite: Boolean) -> Unit
