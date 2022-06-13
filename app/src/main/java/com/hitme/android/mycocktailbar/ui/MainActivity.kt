@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val isDarkMode = dataStoreManager.darkMode.collectAsStateLifecycleAware(false)
             MyCocktailBarTheme(darkTheme = isDarkMode.value) {
-                MyCocktailBarApp()
+                MyCocktailBarApp(dataStoreManager)
             }
         }
     }

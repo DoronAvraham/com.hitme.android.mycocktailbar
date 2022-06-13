@@ -2,7 +2,6 @@ package com.hitme.android.mycocktailbar.ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -14,20 +13,23 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.hitme.android.mycocktailbar.DataStoreManager
 import com.hitme.android.mycocktailbar.collectAsStateLifecycleAware
 import com.hitme.android.mycocktailbar.ui.viewmodels.CocktailsListViewModel
+import kotlinx.coroutines.launch
 
 /**
  * Main App UI entry point.
  */
 @Composable
-fun MyCocktailBarApp() {
+fun MyCocktailBarApp(dataStoreManager: DataStoreManager) {
     val navController = rememberNavController()
     val navigationActions = remember(navController) {
         NavigationActions(navController)
@@ -40,20 +42,23 @@ fun MyCocktailBarApp() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination?.route
 
-    val onBackPressed: () -> Unit = { navController.navigateUp() }
+    val scope = rememberCoroutineScope()
+    val onToggleDarkMode: () -> Unit = { scope.launch { dataStoreManager.toggleDarkMode() } }
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
                 contentPadding =
-                PaddingValues(8.dp),
+                PaddingValues(vertical = 8.dp),
                 backgroundColor = MaterialTheme.colors.primary
             ) {
                 if (currentDestination == AppDestinations.HOME_SCREEN) {
                     SearchBar(
                         Modifier.fillMaxWidth(),
                         uiState.isLoading,
-                        cocktailsViewModel::searchCocktail
+                        cocktailsViewModel::searchCocktail,
+                        onToggleDarkMode
                     )
                 } else if (currentDestination == AppDestinations.DETAILS_SCREEN) {
                     DetailsTitleBar(
@@ -61,10 +66,10 @@ fun MyCocktailBarApp() {
                         cocktailId = uiState.selectedCocktail.id,
                         favorites = uiState.favorites,
                         onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
-                        onBackClicked = onBackPressed
+                        onBackClicked = navController::navigateUp
                     )
                 } else {
-                    TitleBar(currentDestination = currentDestination)
+                    FavoritesTitleBar(currentDestination = currentDestination)
                 }
             }
         },
@@ -77,18 +82,6 @@ fun MyCocktailBarApp() {
             navigationActions = navigationActions,
             cocktailsViewModel = cocktailsViewModel,
             uiState = uiState
-        )
-    }
-}
-
-@Composable
-fun TitleBar(modifier: Modifier = Modifier, currentDestination: String?) {
-    val screen = BottomNavScreen.screens.firstOrNull { it.destination == currentDestination }
-    screen?.apply {
-        Text(
-            modifier = modifier.padding(start = 10.dp),
-            text = stringResource(screen.resourceId),
-            color = MaterialTheme.colors.onSurface
         )
     }
 }

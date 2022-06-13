@@ -66,8 +66,5 @@ fun NavGraph(
                 cocktail = uiState.selectedCocktail
             )
         }
-        composable(AppDestinations.SETTINGS_SCREEN) {
-            SettingsScreen()
-        }
     }
 }

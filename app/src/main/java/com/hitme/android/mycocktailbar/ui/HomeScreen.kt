@@ -1,7 +1,9 @@
 package com.hitme.android.mycocktailbar.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
@@ -15,6 +17,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -23,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -86,45 +90,62 @@ fun HomeScreen(
 }
 
 @Composable
-fun SearchBar(modifier: Modifier = Modifier, isLoading: Boolean, onClick: (String) -> Unit) {
+fun SearchBar(
+    modifier: Modifier = Modifier,
+    isLoading: Boolean,
+    onSearch: (String) -> Unit,
+    onToggleDarkMode: () -> Unit
+) {
     val text = rememberSaveable { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
 
-    TextField(
-        modifier = modifier,
-        value = text.value,
-        label = { Text(text = stringResource(R.string.search), color = MaterialTheme.colors.onPrimary) },
-        leadingIcon = {
-            IconButton(
-                onClick = {
-                    onClick(text.value)
-                    focusManager.clearFocus()
-                },
-                enabled = text.value.isNotEmpty() && !isLoading
-            ) {
-                Icon(imageVector = Icons.Default.Search, "", tint = MaterialTheme.colors.onPrimary)
-            }
-        },
-        textStyle = TextStyle(color = MaterialTheme.colors.onBackground),
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = MaterialTheme.colors.primary,
-            focusedIndicatorColor = MaterialTheme.colors.onPrimary,
-            unfocusedIndicatorColor = MaterialTheme.colors.onPrimary,
-            cursorColor = MaterialTheme.colors.onPrimary
-        ),
-        onValueChange = { text.value = it },
-        enabled = !isLoading,
-        singleLine = true,
-        keyboardOptions = KeyboardOptions.Default.copy(
-            autoCorrect = false,
-            keyboardType = KeyboardType.Text,
-            imeAction = ImeAction.Search
-        ),
-        keyboardActions = KeyboardActions(onSearch = {
-            onClick(text.value)
-            focusManager.clearFocus()
-        })
-    )
+    Row(
+        modifier = modifier.background(MaterialTheme.colors.primary),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        TextField(
+            modifier = Modifier.weight(1f).padding(horizontal = 8.dp),
+            value = text.value,
+            label = { Text(text = stringResource(R.string.search), color = MaterialTheme.colors.onPrimary) },
+            leadingIcon = {
+                IconButton(
+                    onClick = {
+                        onSearch(text.value)
+                        focusManager.clearFocus()
+                    },
+                    enabled = text.value.isNotEmpty() && !isLoading
+                ) {
+                    Icon(imageVector = Icons.Default.Search, "", tint = MaterialTheme.colors.onPrimary)
+                }
+            },
+            textStyle = TextStyle(color = MaterialTheme.colors.onPrimary),
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = MaterialTheme.colors.primary,
+                focusedIndicatorColor = MaterialTheme.colors.onPrimary,
+                unfocusedIndicatorColor = MaterialTheme.colors.onPrimary,
+                cursorColor = MaterialTheme.colors.onPrimary
+            ),
+            onValueChange = { text.value = it },
+            enabled = !isLoading,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                autoCorrect = false,
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Search
+            ),
+            keyboardActions = KeyboardActions(onSearch = {
+                onSearch(text.value)
+                focusManager.clearFocus()
+            })
+        )
+
+        IconButton(
+            modifier = Modifier.padding(end = 8.dp),
+            onClick = onToggleDarkMode
+        ) {
+            Icon(imageVector = Icons.Default.MoreVert, "", tint = MaterialTheme.colors.onPrimary)
+        }
+    }
 }
 
 @Preview(showBackground = true)
@@ -148,6 +169,6 @@ fun HomeScreenPreview() {
 @Composable
 fun SearchBarPreview() {
     MyCocktailBarTheme {
-        SearchBar(isLoading = false, onClick = {})
+        SearchBar(isLoading = false, onSearch = {}, onToggleDarkMode = {})
     }
 }

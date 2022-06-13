@@ -4,8 +4,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hitme.android.mycocktailbar.data.Cocktail
@@ -33,6 +36,18 @@ fun FavoritesScreen(
             onListItemClick = onListItemClick,
             onFavoriteStateChange = onFavoriteStateChange,
             onFavoriteStatusCheck = onFavoriteStatusCheck
+        )
+    }
+}
+
+@Composable
+fun FavoritesTitleBar(modifier: Modifier = Modifier, currentDestination: String?) {
+    val screen = BottomNavScreen.screens.firstOrNull { it.destination == currentDestination }
+    screen?.apply {
+        Text(
+            modifier = modifier.padding(start = 10.dp),
+            text = stringResource(screen.resourceId),
+            color = MaterialTheme.colors.onPrimary
         )
     }
 }

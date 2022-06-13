@@ -9,12 +9,15 @@ import kotlinx.coroutines.flow.map
 
 class DataStoreManager(private val context: Context) {
 
-    suspend fun setDarkMode(darkMode: Boolean) {
-        context.appPrefs.edit { it[DARK_MODE_KEY] = darkMode }
+    suspend fun toggleDarkMode() {
+        context.appPrefs.edit {
+            val darkMode = it[DARK_MODE_KEY] ?: false
+            it[DARK_MODE_KEY] = !darkMode
+        }
     }
 
     val darkMode: Flow<Boolean>
-        get() = context.appPrefs.data.map { it[DARK_MODE_KEY] ?: true }
+        get() = context.appPrefs.data.map { it[DARK_MODE_KEY] ?: false }
 
     companion object {
         private const val DATASTORE_NAME = "app_preferences"

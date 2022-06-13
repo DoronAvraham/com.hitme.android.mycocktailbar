@@ -106,13 +106,13 @@ fun DetailsTitleBar(
         IconButton(
             onClick = onBackClicked,
         ) {
-            Icon(imageVector = Icons.Default.ArrowBack, "", tint = MaterialTheme.colors.onSurface)
+            Icon(imageVector = Icons.Default.ArrowBack, "", tint = MaterialTheme.colors.onPrimary)
         }
 
         Text(
             modifier = Modifier.weight(1f),
             text = title,
-            color = MaterialTheme.colors.onSurface
+            color = MaterialTheme.colors.onPrimary
         )
 
         FavoriteButton(
