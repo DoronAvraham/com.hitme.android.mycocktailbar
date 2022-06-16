@@ -31,12 +31,13 @@ android {
 
     buildTypes {
         named("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
                 "proguard-rules-kotlinx.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
