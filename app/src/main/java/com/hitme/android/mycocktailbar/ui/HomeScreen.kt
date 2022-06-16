@@ -24,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -99,8 +98,7 @@ fun SearchBar(
     onToggleDarkMode: () -> Unit
 ) {
     var text by rememberSaveable { mutableStateOf("") }
-    val focusManager = LocalFocusManager.current
-    val focusManagerState by remember { mutableStateOf(focusManager) }
+    val focusManagerState by rememberUpdatedState(newValue = LocalFocusManager.current)
 
     val search = {
         onSearch(text)
