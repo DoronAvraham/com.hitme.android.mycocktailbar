@@ -24,8 +24,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -57,7 +59,7 @@ fun HomeScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(15.dp)
+            .padding(10.dp)
             .padding(paddingValues)
     ) {
         CocktailsList(
@@ -96,24 +98,31 @@ fun SearchBar(
     onSearch: (String) -> Unit,
     onToggleDarkMode: () -> Unit
 ) {
-    val text = rememberSaveable { mutableStateOf("") }
+    var text by rememberSaveable { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
+    val focusManagerState by remember { mutableStateOf(focusManager) }
+
+    val search = {
+        onSearch(text)
+        focusManagerState.clearFocus()
+    }
+
+    val enabled by rememberSaveable(text, isLoading) { mutableStateOf(text.isNotEmpty() && !isLoading) }
 
     Row(
         modifier = modifier.background(MaterialTheme.colors.primary),
         verticalAlignment = Alignment.CenterVertically
     ) {
         TextField(
-            modifier = Modifier.weight(1f).padding(horizontal = 8.dp),
-            value = text.value,
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 8.dp),
+            value = text,
             label = { Text(text = stringResource(R.string.search), color = MaterialTheme.colors.onPrimary) },
             leadingIcon = {
                 IconButton(
-                    onClick = {
-                        onSearch(text.value)
-                        focusManager.clearFocus()
-                    },
-                    enabled = text.value.isNotEmpty() && !isLoading
+                    onClick = search,
+                    enabled = enabled
                 ) {
                     Icon(imageVector = Icons.Default.Search, "", tint = MaterialTheme.colors.onPrimary)
                 }
@@ -125,7 +134,7 @@ fun SearchBar(
                 unfocusedIndicatorColor = MaterialTheme.colors.onPrimary,
                 cursorColor = MaterialTheme.colors.onPrimary
             ),
-            onValueChange = { text.value = it },
+            onValueChange = { text = it },
             enabled = !isLoading,
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -134,8 +143,7 @@ fun SearchBar(
                 imeAction = ImeAction.Search
             ),
             keyboardActions = KeyboardActions(onSearch = {
-                onSearch(text.value)
-                focusManager.clearFocus()
+                search()
             })
         )
 
