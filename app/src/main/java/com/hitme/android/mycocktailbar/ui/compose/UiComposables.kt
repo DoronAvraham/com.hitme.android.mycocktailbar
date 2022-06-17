@@ -1,6 +1,5 @@
 package com.hitme.android.mycocktailbar.ui.compose
 
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
@@ -25,12 +23,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hitme.android.mycocktailbar.R
+import coil.compose.AsyncImage
 import com.hitme.android.mycocktailbar.data.Cocktail
 import com.hitme.android.mycocktailbar.ui.theme.MyCocktailBarTheme
 
@@ -70,19 +67,10 @@ fun ListItem(
         backgroundColor = MaterialTheme.colors.surface
     ) {
         Row {
-            GlideImage(
-                modifier = Modifier
-                    .size(140.dp, 120.dp)
-                    .clip(MaterialTheme.shapes.medium),
-                contentDescription = "",
-                data = cocktail.thumbnailUrl,
-                placeHolderDrawable = AppCompatResources.getDrawable(
-                    LocalContext.current,
-                    R.drawable.ic_launcher_foreground
-                ),
-                glideModifier = { requestBuilder ->
-                    requestBuilder.centerCrop()
-                }
+            AsyncImage(
+                modifier = Modifier.clip(MaterialTheme.shapes.medium),
+                model = cocktail.thumbnailUrl,
+                contentDescription = ""
             )
             Column(
                 modifier = Modifier

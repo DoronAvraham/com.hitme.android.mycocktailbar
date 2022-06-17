@@ -19,8 +19,8 @@ object Versions {
     const val DAGGER_HILT = "2.42"
 
     // 3rd party dependencies
+    const val COIL = "2.1.0"
     const val DEPENDENCY_UPDATER = "0.42.0"
-    const val GLIDE = "4.13.2"
     const val KOTLIN = "1.6.21"
     const val KOTLINX_COROUTINES = "1.6.1"
     const val KOTLINX_RETROFIT_CONVERTER = "0.8.0"
@@ -52,8 +52,8 @@ object Libs {
     const val lifecycle_runtime_ktx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.ANDROIDX_LIFECYCLE}"
 
     // 3rd party dependencies
-    const val glide = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
-    const val glide_compiler = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
+    const val coil = "io.coil-kt:coil:${Versions.COIL}"
+    const val coil_compose = "io.coil-kt:coil-compose:${Versions.COIL}"
     const val okhttp_logging = "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP_LOGGING}"
     const val kotlinx_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES}"
     const val kotlinx_coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLINX_COROUTINES}"

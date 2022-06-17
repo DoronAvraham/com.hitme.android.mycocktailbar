@@ -71,8 +71,8 @@ dependencies {
     implementation(Libs.lifecycle_runtime_ktx)
 
     // 3rd party dependencies
-    implementation(Libs.glide)
-    kapt(Libs.glide_compiler)
+    implementation(Libs.coil)
+    implementation(Libs.coil_compose)
     implementation(Libs.kotlinx_coroutines_android)
     implementation(Libs.kotlinx_coroutines_core)
     implementation(Libs.kotlinx_serialization)

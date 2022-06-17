@@ -32,7 +32,7 @@ Libraries Used
 * [UI][8] - Details on why and how to use UI Components in your apps - together or separate
     * [Compose][9] - A basic unit of composable UI.
 * Third party and miscellaneous libraries
-    * [Glide][10] for image loading
+    * [Coil][10] for image loading
     * [Hilt][11]: for [dependency injection][12]
     * [Kotlin Coroutines][13] for managing background threads with simplified code and reducing needs for callbacks
     * [Kotlin Flows][14] for providing consistent unidirectional data flow between the different app layers in a non 
@@ -49,7 +49,7 @@ Libraries Used
 [7]: https://developer.android.com/topic/libraries/architecture/viewmodel
 [8]: https://developer.android.com/guide/topics/ui
 [9]: https://developer.android.com/jetpack/compose
-[10]: https://bumptech.github.io/glide/
+[10]: https://coil-kt.github.io/coil/
 [11]: https://developer.android.com/training/dependency-injection/hilt-android
 [12]: https://developer.android.com/training/dependency-injection
 [13]: https://kotlinlang.org/docs/reference/coroutines-overview.html
