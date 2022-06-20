@@ -37,7 +37,7 @@ Libraries Used
     * [Kotlin Coroutines][13] for managing background threads with simplified code and reducing needs for callbacks
     * [Kotlin Flows][14] for providing consistent unidirectional data flow between the different app layers in a non 
       platform dependent way.
-    * [Retrofit][15] A type-safe HTTP client for Android and Java
+    * [Ktor][15] A multiplatform HTTP client.
 
 [0]: https://developer.android.com/jetpack/components
 [1]: https://developer.android.com/topic/libraries/support-library/packages#v7-appcompat
@@ -54,5 +54,5 @@ Libraries Used
 [12]: https://developer.android.com/training/dependency-injection
 [13]: https://kotlinlang.org/docs/reference/coroutines-overview.html
 [14]: https://developer.android.com/kotlin/flow
-[15]: https://github.com/square/retrofit
+[15]: https://ktor.io/
 [16]: https://developer.android.com/topic/libraries/architecture/datastore

@@ -43,7 +43,7 @@ class CocktailsListViewModel @Inject constructor(
         _uiState.update { it.copy(query = query, isLoading = true, cocktails = emptyList()) }
         job?.cancel()
         job = viewModelScope.launch {
-            remoteRepository.getSearchResults(query)
+            remoteRepository.search(query)
                 .catch { error ->
                     _uiState.update {
                         it.copy(

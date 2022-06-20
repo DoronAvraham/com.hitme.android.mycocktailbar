@@ -1,10 +1,11 @@
 package com.hitme.android.mycocktailbar.di
 
-import com.hitme.android.mycocktailbar.api.CocktailsService
+import com.hitme.android.mycocktailbar.api.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.ktor.client.HttpClient
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -13,7 +14,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideCocktailService(): CocktailsService {
-        return CocktailsService.create()
+    fun provideHttpClient(): HttpClient {
+        return ApiService.createClient()
     }
 }

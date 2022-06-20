@@ -23,11 +23,10 @@ object Versions {
     const val DEPENDENCY_UPDATER = "0.42.0"
     const val KOTLIN = "1.6.21"
     const val KOTLINX_COROUTINES = "1.6.1"
-    const val KOTLINX_RETROFIT_CONVERTER = "0.8.0"
     const val KOTLINX_SERIALIZATION = "1.3.3"
     const val KTLINT = "10.2.1"
+    const val KTOR = "2.0.2"
     const val OKHTTP_LOGGING = "4.9.3"
-    const val RETROFIT = "2.9.0"
 
     // Testing dependencies
     const val ANDROIDX_ESPRESSO = "3.4.0"
@@ -58,8 +57,10 @@ object Libs {
     const val kotlinx_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES}"
     const val kotlinx_coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLINX_COROUTINES}"
     const val kotlinx_serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.KOTLINX_SERIALIZATION}"
-    const val kotlinx_serialization_converter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.KOTLINX_RETROFIT_CONVERTER}"
-    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
+    const val ktor = "io.ktor:ktor-client-android:${Versions.KTOR}"
+    const val ktor_logging = "io.ktor:ktor-client-logging:${Versions.KTOR}"
+    const val ktor_negotiation = "io.ktor:ktor-client-content-negotiation:${Versions.KTOR}"
+    const val ktor_serialization = "io.ktor:ktor-serialization-kotlinx-json:${Versions.KTOR}"
 
     //Test dependencies
     const val junit = "junit:junit:${Versions.JUNIT}"

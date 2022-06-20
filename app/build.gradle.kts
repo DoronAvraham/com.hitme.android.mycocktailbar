@@ -76,9 +76,11 @@ dependencies {
     implementation(Libs.kotlinx_coroutines_android)
     implementation(Libs.kotlinx_coroutines_core)
     implementation(Libs.kotlinx_serialization)
-    implementation(Libs.kotlinx_serialization_converter)
     implementation(Libs.okhttp_logging)
-    implementation(Libs.retrofit)
+    implementation(Libs.ktor)
+    implementation(Libs.ktor_logging)
+    implementation(Libs.ktor_negotiation)
+    implementation(Libs.ktor_serialization)
 
     // Test dependencies
     testImplementation(Libs.junit)
