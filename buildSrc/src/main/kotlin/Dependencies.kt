@@ -11,12 +11,12 @@ object Versions {
     const val ANDROIDX_CORE_KTX = "1.7.0"
     const val ANDROIDX_DATASTORE = "1.0.0"
     const val ANDROIDX_HILT = "1.0.0"
-    const val ANDROIDX_NAVIGATION = "2.4.2"
-    const val ANDROIDX_LIFECYCLE = "2.4.1"
+    const val ANDROIDX_NAVIGATION = "2.5.3"
+    const val ANDROIDX_LIFECYCLE = "2.5.1"
     const val ANDROIDX_ROOM = "2.4.2"
     const val COMPOSE = "1.2.0-beta03"
     const val COMPOSE_ACTIVITY = "1.4.0"
-    const val DAGGER_HILT = "2.42"
+    const val DAGGER_HILT = "2.44.2"
 
     // 3rd party dependencies
     const val COIL = "2.1.0"
