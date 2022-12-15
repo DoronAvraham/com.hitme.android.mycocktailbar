@@ -6,7 +6,7 @@ object AndroidVersions {
 
 object Versions {
     // Android dependencies
-    const val AGP = "7.2.1"
+    const val AGP = "7.3.1"
     const val ANDROIDX_APPCOMPAT = "1.4.1"
     const val ANDROIDX_CORE_KTX = "1.7.0"
     const val ANDROIDX_DATASTORE = "1.0.0"
