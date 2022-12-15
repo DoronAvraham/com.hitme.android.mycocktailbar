@@ -39,6 +39,14 @@ Libraries Used
       platform dependent way.
     * [Ktor][15] A multiplatform HTTP client.
 
+Tooling
+-------
+* [gradle-versions-plugin][100] - Produce a list of all updatable dependencies.
+  To run: `./gradlew app:dependencyUpdates`
+* [Ktlint][101] - This plugin creates convenient tasks in your Gradle project that run ktlint 
+  checks or do code auto format.
+  To run: `./gradlew ktlintCheck`
+
 [0]: https://developer.android.com/jetpack/components
 [1]: https://developer.android.com/topic/libraries/support-library/packages#v7-appcompat
 [2]: https://developer.android.com/kotlin/ktx
@@ -56,3 +64,6 @@ Libraries Used
 [14]: https://developer.android.com/kotlin/flow
 [15]: https://ktor.io/
 [16]: https://developer.android.com/topic/libraries/architecture/datastore
+
+[100]: https://github.com/ben-manes/gradle-versions-plugin
+[101]: https://github.com/JLLeitschuh/ktlint-gradle

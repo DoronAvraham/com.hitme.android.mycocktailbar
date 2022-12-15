@@ -89,9 +89,7 @@ dependencies {
     androidTestImplementation(Libs.androidx_compose_ui_test)
 }
 
-// running "./gradlew app:dependencyUpdates" will produce a list of all updatable dependencies.
-// https://github.com/ben-manes/gradle-versions-plugin
-// We filter out non wanted versions.
+// Check README.md Tooling section for details.
 tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
 
     val nonStableTags = listOf("alpha", "beta", "rc")
