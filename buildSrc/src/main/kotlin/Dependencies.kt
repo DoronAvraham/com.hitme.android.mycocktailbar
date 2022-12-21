@@ -13,7 +13,7 @@ object Versions {
     const val ANDROIDX_HILT = "1.0.0"
     const val ANDROIDX_NAVIGATION = "2.5.3"
     const val ANDROIDX_LIFECYCLE = "2.5.1"
-    const val ANDROIDX_ROOM = "2.4.2"
+    const val ANDROIDX_ROOM = "2.4.3"
     const val COMPOSE = "1.3.2"
     const val COMPOSE_ACTIVITY = "1.6.1"
     const val COMPOSE_MATERIAL = "1.3.1"
