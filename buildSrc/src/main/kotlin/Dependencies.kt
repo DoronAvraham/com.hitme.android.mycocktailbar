@@ -26,8 +26,8 @@ object Versions {
     const val KOTLINX_COROUTINES = "1.6.4"
     const val KOTLINX_SERIALIZATION = "1.4.1"
     const val KTLINT = "10.2.1"
-    const val KTOR = "2.0.2"
-    const val OKHTTP_LOGGING = "4.9.3"
+    const val KTOR = "2.2.1"
+    const val OKHTTP_LOGGING = "4.10.0"
 
     // Testing dependencies
     const val ANDROIDX_ESPRESSO = "3.4.0"
