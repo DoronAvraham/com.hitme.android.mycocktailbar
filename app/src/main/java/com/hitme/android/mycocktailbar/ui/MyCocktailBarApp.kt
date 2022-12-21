@@ -92,8 +92,8 @@ fun BottomNavBar(currentRoute: String?, navigationActions: NavigationActions) {
         BottomNavigation(elevation = 10.dp, backgroundColor = MaterialTheme.colors.primary) {
             BottomNavScreen.screens.forEach { screen ->
                 BottomNavigationItem(
-                    icon = { Icon(imageVector = screen.image, "", tint = MaterialTheme.colors.onPrimary) },
-                    label = { Text(text = stringResource(screen.resourceId), color = MaterialTheme.colors.onPrimary) },
+                    icon = { Icon(imageVector = screen.image, "") },
+                    label = { Text(text = stringResource(screen.resourceId)) },
                     selected = currentRoute == screen.destination,
                     enabled = currentRoute != screen.destination,
                     onClick = { navigationActions.navigate(screen.destination) }
