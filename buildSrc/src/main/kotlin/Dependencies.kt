@@ -1,7 +1,7 @@
 object AndroidVersions {
     const val MIN_SDK = 23
-    const val TARGET_SDK = 32
-    const val COMPILE_SDK = 32
+    const val TARGET_SDK = 33
+    const val COMPILE_SDK = 33
 }
 
 object Versions {
@@ -14,16 +14,17 @@ object Versions {
     const val ANDROIDX_NAVIGATION = "2.5.3"
     const val ANDROIDX_LIFECYCLE = "2.5.1"
     const val ANDROIDX_ROOM = "2.4.2"
-    const val COMPOSE = "1.2.0-beta03"
-    const val COMPOSE_ACTIVITY = "1.4.0"
+    const val COMPOSE = "1.3.2"
+    const val COMPOSE_ACTIVITY = "1.6.1"
+    const val COMPOSE_MATERIAL = "1.3.1"
     const val DAGGER_HILT = "2.44.2"
 
     // 3rd party dependencies
-    const val COIL = "2.1.0"
+    const val COIL = "2.2.2"
     const val DEPENDENCY_UPDATER = "0.42.0"
-    const val KOTLIN = "1.6.21"
-    const val KOTLINX_COROUTINES = "1.6.1"
-    const val KOTLINX_SERIALIZATION = "1.3.3"
+    const val KOTLIN = "1.7.20"
+    const val KOTLINX_COROUTINES = "1.6.4"
+    const val KOTLINX_SERIALIZATION = "1.4.1"
     const val KTLINT = "10.2.1"
     const val KTOR = "2.0.2"
     const val OKHTTP_LOGGING = "4.9.3"
@@ -40,7 +41,7 @@ object Libs {
     const val androidx_appcompat = "androidx.appcompat:appcompat-resources:${Versions.ANDROIDX_APPCOMPAT}"
     const val androidx_core_ktx = "androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX}"
     const val androidx_compose = "androidx.compose.ui:ui-tooling:${Versions.COMPOSE}"
-    const val androidx_compose_material = "androidx.compose.material:material:${Versions.COMPOSE}"
+    const val androidx_compose_material = "androidx.compose.material:material:${Versions.COMPOSE_MATERIAL}"
     const val androidx_compose_navigation = "androidx.navigation:navigation-compose:${Versions.ANDROIDX_NAVIGATION}"
     const val androidx_datastore = "androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE}"
     const val androidx_hilt_navigation_compose = "androidx.hilt:hilt-navigation-compose:${Versions.ANDROIDX_HILT}"
