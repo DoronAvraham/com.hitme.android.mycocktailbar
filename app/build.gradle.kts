@@ -92,7 +92,7 @@ dependencies {
 // Check README.md Tooling section for details.
 tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
 
-    val nonStableTags = listOf("alpha", "beta", "rc")
+    val nonStableTags = listOf("dev", "alpha", "beta", "rc")
 
     fun isNonStable(version: String) = nonStableTags.any { tag -> version.contains(tag, ignoreCase = true) }
 
