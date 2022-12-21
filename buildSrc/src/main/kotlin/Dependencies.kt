@@ -30,8 +30,8 @@ object Versions {
     const val OKHTTP_LOGGING = "4.10.0"
 
     // Testing dependencies
-    const val ANDROIDX_ESPRESSO = "3.4.0"
-    const val ANDROIDX_JUNIT = "1.1.3"
+    const val ANDROIDX_ESPRESSO = "3.5.0"
+    const val ANDROIDX_JUNIT = "1.1.4"
     const val JUNIT = "4.13.2"
 }
 
