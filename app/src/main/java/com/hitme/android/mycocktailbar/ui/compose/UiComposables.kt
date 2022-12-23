@@ -1,5 +1,6 @@
 package com.hitme.android.mycocktailbar.ui.compose
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,6 +32,7 @@ import coil.compose.AsyncImage
 import com.hitme.android.mycocktailbar.data.Cocktail
 import com.hitme.android.mycocktailbar.ui.theme.MyCocktailBarTheme
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CocktailsList(
     cocktails: List<Cocktail>,
@@ -43,6 +45,7 @@ fun CocktailsList(
     ) {
         items(items = cocktails, key = { it.id }) { cocktail ->
             ListItem(
+                modifier = Modifier.animateItemPlacement(),
                 cocktail = cocktail,
                 onClick = onListItemClick,
                 onFavoriteStateChange = onFavoriteStateChange,
@@ -54,13 +57,14 @@ fun CocktailsList(
 
 @Composable
 fun ListItem(
+    modifier: Modifier = Modifier,
     cocktail: Cocktail,
     onClick: (cocktail: Cocktail) -> Unit,
     onFavoriteStateChange: (itemId: String, isFavorite: Boolean) -> Unit,
     onFavoriteStatusCheck: (itemId: String) -> Boolean
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(120.dp)
             .clickable { onClick(cocktail) },
