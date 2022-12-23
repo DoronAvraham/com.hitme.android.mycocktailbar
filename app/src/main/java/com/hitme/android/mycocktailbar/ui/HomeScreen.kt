@@ -25,7 +25,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -93,10 +92,11 @@ fun HomeScreen(
 fun SearchBar(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
+    text: String,
+    onValueChange: (String) -> Unit,
     onSearch: (String) -> Unit,
     onToggleDarkMode: () -> Unit
 ) {
-    var text by rememberSaveable { mutableStateOf("") }
     val focusManagerState by rememberUpdatedState(newValue = LocalFocusManager.current)
 
     val search = {
@@ -133,7 +133,7 @@ fun SearchBar(
                 cursorColor = LocalContentColor.current,
                 leadingIconColor = LocalContentColor.current
             ),
-            onValueChange = { text = it },
+            onValueChange = onValueChange,
             enabled = !isLoading,
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -176,6 +176,6 @@ fun HomeScreenPreview() {
 @Composable
 fun SearchBarPreview() {
     MyCocktailBarTheme {
-        SearchBar(isLoading = false, onSearch = {}, onToggleDarkMode = {})
+        SearchBar(isLoading = false, text = "", onSearch = {}, onToggleDarkMode = {}, onValueChange = {})
     }
 }

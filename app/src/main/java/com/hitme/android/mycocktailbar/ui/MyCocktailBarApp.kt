@@ -57,10 +57,12 @@ fun MyCocktailBarApp(dataStoreManager: DataStoreManager) {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                     when (currentDestination) {
                         AppDestinations.HOME_SCREEN -> SearchBar(
-                            Modifier.fillMaxWidth(),
-                            uiState.isLoading,
-                            cocktailsViewModel::searchCocktail,
-                            onToggleDarkMode
+                            modifier = Modifier.fillMaxWidth(),
+                            isLoading = uiState.isLoading,
+                            text = uiState.query,
+                            onValueChange = cocktailsViewModel::onSearchTextChange,
+                            onSearch = cocktailsViewModel::searchCocktail,
+                            onToggleDarkMode = onToggleDarkMode
                         )
                         AppDestinations.DETAILS_SCREEN -> DetailsTitleBar(
                             title = uiState.selectedCocktail.name,
