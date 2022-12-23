@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -47,7 +46,6 @@ fun FavoritesTitleBar(modifier: Modifier = Modifier, currentDestination: String?
         Text(
             modifier = modifier.padding(start = 10.dp),
             text = stringResource(screen.resourceId),
-            color = MaterialTheme.colors.onPrimary
         )
     }
 }

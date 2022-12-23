@@ -53,14 +53,13 @@ fun DetailsScreen(
         Card(
             modifier = Modifier
                 .fillMaxWidth(),
-            backgroundColor = MaterialTheme.colors.surface
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 val ingredients: List<String> = cocktail.ingredients.mapIndexed { index, ingredient ->
                     "$ingredient ${cocktail.measures[index]}"
                 }
                 ingredients.forEach {
-                    Text(text = it, modifier = Modifier.padding(5.dp), color = MaterialTheme.colors.onSurface)
+                    Text(text = it, modifier = Modifier.padding(5.dp))
                 }
             }
         }
@@ -70,13 +69,11 @@ fun DetailsScreen(
         Card(
             modifier = Modifier
                 .fillMaxWidth(),
-            backgroundColor = MaterialTheme.colors.surface
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = cocktail.instructions,
                     modifier = Modifier.padding(10.dp),
-                    color = MaterialTheme.colors.onSurface,
                 )
             }
         }
@@ -96,13 +93,12 @@ fun DetailsTitleBar(
         IconButton(
             onClick = onBackClicked,
         ) {
-            Icon(imageVector = Icons.Default.ArrowBack, "", tint = MaterialTheme.colors.onPrimary)
+            Icon(imageVector = Icons.Default.ArrowBack, "")
         }
 
         Text(
             modifier = Modifier.weight(1f),
             text = title,
-            color = MaterialTheme.colors.onPrimary
         )
 
         FavoriteButton(

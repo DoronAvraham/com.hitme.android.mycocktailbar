@@ -64,7 +64,6 @@ fun ListItem(
             .fillMaxWidth()
             .height(120.dp)
             .clickable { onClick(cocktail) },
-        backgroundColor = MaterialTheme.colors.surface
     ) {
         Row {
             AsyncImage(
@@ -80,7 +79,6 @@ fun ListItem(
             ) {
                 Text(
                     text = cocktail.name,
-                    color = MaterialTheme.colors.onSurface,
                     modifier = Modifier.padding(bottom = 8.dp),
                     fontWeight = FontWeight.Bold,
                     overflow = TextOverflow.Ellipsis,
@@ -88,7 +86,6 @@ fun ListItem(
                 )
                 Text(
                     text = cocktail.ingredients.joinToString(),
-                    color = MaterialTheme.colors.onSurface,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 3
                 )

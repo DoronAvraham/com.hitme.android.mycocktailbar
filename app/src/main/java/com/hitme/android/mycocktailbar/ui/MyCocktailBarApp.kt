@@ -4,13 +4,15 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -49,27 +51,26 @@ fun MyCocktailBarApp(dataStoreManager: DataStoreManager) {
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
-                contentPadding =
-                PaddingValues(vertical = 8.dp),
-                backgroundColor = MaterialTheme.colors.primary
+                contentPadding = PaddingValues(vertical = 8.dp),
             ) {
-                if (currentDestination == AppDestinations.HOME_SCREEN) {
-                    SearchBar(
-                        Modifier.fillMaxWidth(),
-                        uiState.isLoading,
-                        cocktailsViewModel::searchCocktail,
-                        onToggleDarkMode
-                    )
-                } else if (currentDestination == AppDestinations.DETAILS_SCREEN) {
-                    DetailsTitleBar(
-                        title = uiState.selectedCocktail.name,
-                        cocktailId = uiState.selectedCocktail.id,
-                        favorites = uiState.favorites,
-                        onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
-                        onBackClicked = navController::navigateUp
-                    )
-                } else {
-                    FavoritesTitleBar(currentDestination = currentDestination)
+                // Override the default TopAppBar ContentAlpha.medium.
+                CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
+                    when (currentDestination) {
+                        AppDestinations.HOME_SCREEN -> SearchBar(
+                            Modifier.fillMaxWidth(),
+                            uiState.isLoading,
+                            cocktailsViewModel::searchCocktail,
+                            onToggleDarkMode
+                        )
+                        AppDestinations.DETAILS_SCREEN -> DetailsTitleBar(
+                            title = uiState.selectedCocktail.name,
+                            cocktailId = uiState.selectedCocktail.id,
+                            favorites = uiState.favorites,
+                            onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
+                            onBackClicked = navController::navigateUp
+                        )
+                        else -> FavoritesTitleBar(currentDestination = currentDestination)
+                    }
                 }
             }
         },
@@ -89,7 +90,7 @@ fun MyCocktailBarApp(dataStoreManager: DataStoreManager) {
 @Composable
 fun BottomNavBar(currentRoute: String?, navigationActions: NavigationActions) {
     if (BottomNavScreen.screens.any { it.destination == currentRoute }) {
-        BottomNavigation(elevation = 10.dp, backgroundColor = MaterialTheme.colors.primary) {
+        BottomNavigation(elevation = 10.dp) {
             BottomNavScreen.screens.forEach { screen ->
                 BottomNavigationItem(
                     icon = { Icon(imageVector = screen.image, "") },

@@ -1,6 +1,5 @@
 package com.hitme.android.mycocktailbar.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -10,7 +9,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Text
@@ -29,9 +28,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -108,7 +107,6 @@ fun SearchBar(
     val enabled by rememberSaveable(text, isLoading) { mutableStateOf(text.isNotEmpty() && !isLoading) }
 
     Row(
-        modifier = modifier.background(MaterialTheme.colors.primary),
         verticalAlignment = Alignment.CenterVertically
     ) {
         TextField(
@@ -116,21 +114,24 @@ fun SearchBar(
                 .weight(1f)
                 .padding(horizontal = 8.dp),
             value = text,
-            label = { Text(text = stringResource(R.string.search), color = MaterialTheme.colors.onPrimary) },
+            label = { Text(text = stringResource(R.string.search)) },
             leadingIcon = {
                 IconButton(
                     onClick = search,
                     enabled = enabled
                 ) {
-                    Icon(imageVector = Icons.Default.Search, "", tint = MaterialTheme.colors.onPrimary)
+                    Icon(imageVector = Icons.Default.Search, "")
                 }
             },
-            textStyle = TextStyle(color = MaterialTheme.colors.onPrimary),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = MaterialTheme.colors.primary,
-                focusedIndicatorColor = MaterialTheme.colors.onPrimary,
-                unfocusedIndicatorColor = MaterialTheme.colors.onPrimary,
-                cursorColor = MaterialTheme.colors.onPrimary
+                backgroundColor = Color.Transparent,
+                textColor = LocalContentColor.current,
+                focusedIndicatorColor = LocalContentColor.current,
+                unfocusedIndicatorColor = LocalContentColor.current,
+                focusedLabelColor = LocalContentColor.current,
+                unfocusedLabelColor = LocalContentColor.current,
+                cursorColor = LocalContentColor.current,
+                leadingIconColor = LocalContentColor.current
             ),
             onValueChange = { text = it },
             enabled = !isLoading,
@@ -149,7 +150,7 @@ fun SearchBar(
             modifier = Modifier.padding(end = 8.dp),
             onClick = onToggleDarkMode
         ) {
-            Icon(imageVector = Icons.Default.MoreVert, "", tint = MaterialTheme.colors.onPrimary)
+            Icon(imageVector = Icons.Default.MoreVert, "")
         }
     }
 }
