@@ -29,6 +29,7 @@ Libraries Used
     * [ViewModel][7] - Store UI-related data that isn't destroyed on app rotations. Easily schedule
       asynchronous tasks for optimal execution.
     * [DataStore][16] - Data persistence library.  
+    * [WorkManager][16] - Tasks scheduling framework.  
 * [UI][8] - Details on why and how to use UI Components in your apps - together or separate
     * [Compose][9] - A basic unit of composable UI.
 * Third party and miscellaneous libraries
@@ -64,6 +65,7 @@ Tooling
 [14]: https://developer.android.com/kotlin/flow
 [15]: https://ktor.io/
 [16]: https://developer.android.com/topic/libraries/architecture/datastore
+[17]: https://developer.android.com/topic/libraries/architecture/workmanager
 
 [100]: https://github.com/ben-manes/gradle-versions-plugin
 [101]: https://github.com/JLLeitschuh/ktlint-gradle

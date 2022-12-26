@@ -14,11 +14,15 @@ interface ApiService {
 
     suspend fun search(query: String): Flow<List<Cocktail>>
 
+    suspend fun searchById(id: String): List<Cocktail>
+
     companion object {
 
         const val BASE_URL = "https://www.thecocktaildb.com/"
         const val PATH_SEARCH = "api/json/v1/1/search.php"
+        const val PATH_SEARCH_BY_ID = "api/json/v1/1/lookup.php"
         const val KEY_SEARCH = "s"
+        const val KEY_SEARCH_BY_ID = "i"
 
         fun createClient(): HttpClient {
             return HttpClient(Android) {
