@@ -12,7 +12,7 @@ object Versions {
     const val ANDROIDX_DATASTORE = "1.0.0"
     const val ANDROIDX_HILT = "1.0.0"
     const val ANDROIDX_NAVIGATION = "2.5.3"
-    const val ANDROIDX_LIFECYCLE = "2.5.1"
+    const val ANDROIDX_LIFECYCLE = "2.6.0-alpha03"
     const val ANDROIDX_ROOM = "2.4.3"
     const val ANDROIDX_WORK_MANAGER = "2.7.1"
     const val COMPOSE = "1.3.2"
@@ -48,12 +48,12 @@ object Libs {
     const val androidx_hilt_compiler = "androidx.hilt:hilt-compiler:${Versions.ANDROIDX_HILT}"
     const val androidx_hilt_navigation_compose = "androidx.hilt:hilt-navigation-compose:${Versions.ANDROIDX_HILT}"
     const val androidx_hilt_work_manager = "androidx.hilt:hilt-work:${Versions.ANDROIDX_HILT}"
+    const val androidx_lifecycle_compose_rt = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.ANDROIDX_LIFECYCLE}"
     const val androidx_room = "androidx.room:room-ktx:${Versions.ANDROIDX_ROOM}"
     const val androidx_room_compiler = "androidx.room:room-compiler:${Versions.ANDROIDX_ROOM}"
     const val androidx_work_manager = "androidx.work:work-runtime-ktx:${Versions.ANDROIDX_WORK_MANAGER}"
     const val dagger_hilt = "com.google.dagger:hilt-android:${Versions.DAGGER_HILT}"
     const val dagger_hilt_compiler = "com.google.dagger:hilt-android-compiler:${Versions.DAGGER_HILT}"
-    const val lifecycle_runtime_ktx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.ANDROIDX_LIFECYCLE}"
 
     // 3rd party dependencies
     const val coil = "io.coil-kt:coil:${Versions.COIL}"

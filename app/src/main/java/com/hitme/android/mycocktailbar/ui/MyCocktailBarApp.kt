@@ -20,16 +20,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hitme.android.mycocktailbar.DataStoreManager
-import com.hitme.android.mycocktailbar.collectAsStateLifecycleAware
 import com.hitme.android.mycocktailbar.ui.viewmodels.CocktailsListViewModel
 import kotlinx.coroutines.launch
 
 /**
  * Main App UI entry point.
  */
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun MyCocktailBarApp(dataStoreManager: DataStoreManager) {
     val navController = rememberNavController()
@@ -39,7 +41,7 @@ fun MyCocktailBarApp(dataStoreManager: DataStoreManager) {
     val scaffoldState = rememberScaffoldState()
 
     val cocktailsViewModel = hiltViewModel<CocktailsListViewModel>()
-    val uiState by cocktailsViewModel.uiState.collectAsStateLifecycleAware()
+    val uiState by cocktailsViewModel.uiState.collectAsStateWithLifecycle()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination?.route

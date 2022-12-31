@@ -66,12 +66,12 @@ dependencies {
     kapt(Libs.androidx_hilt_compiler)
     implementation(Libs.androidx_hilt_navigation_compose)
     implementation(Libs.androidx_hilt_work_manager)
+    implementation(Libs.androidx_lifecycle_compose_rt)
     implementation(Libs.androidx_room)
     kapt(Libs.androidx_room_compiler)
     implementation(Libs.androidx_work_manager)
     implementation(Libs.dagger_hilt)
     kapt(Libs.dagger_hilt_compiler)
-    implementation(Libs.lifecycle_runtime_ktx)
 
     // 3rd party dependencies
     implementation(Libs.coil)
