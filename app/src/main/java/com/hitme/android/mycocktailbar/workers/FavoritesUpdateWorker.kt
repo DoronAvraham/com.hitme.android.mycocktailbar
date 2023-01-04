@@ -5,13 +5,14 @@ import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.hitme.android.mycocktailbar.data.Cocktail
 import com.hitme.android.mycocktailbar.data.CocktailsLocalRepository
 import com.hitme.android.mycocktailbar.data.CocktailsRemoteRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.withContext
 
 @HiltWorker
 class FavoritesUpdateWorker @AssistedInject constructor(
@@ -22,20 +23,30 @@ class FavoritesUpdateWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
-        withContext(Dispatchers.IO) {
-            localRepository.getFavorites().take(1).collect { favorites ->
-                favorites.forEach { cocktail ->
-                    remoteRepository.searchById(cocktail.id).forEach {
-                        if (cocktail != it) {
-                            Log.d("WORKER", "Cocktail ${cocktail.name} changed. Updating DB.")
-                            localRepository.updateFavoriteState(it, true)
-                        } else {
-                            Log.d("WORKER", "Cocktail ${cocktail.name} no changed.")
-                        }
-                    }
-                }
+        Log.d(TAG, "FavoritesUpdateWorker started")
+        localRepository.getFavorites().take(1).collect { favorites -> updateCocktails(favorites) }
+        Log.d(TAG, "FavoritesUpdateWorker finished")
+        return Result.success()
+    }
+
+    private suspend fun updateCocktails(favorites: List<Cocktail>) {
+        coroutineScope {
+            favorites
+                .map { cocktail -> async { updateCocktail(cocktail) } }
+                .map { deferred -> deferred.await() }
+        }
+    }
+
+    private suspend fun updateCocktail(cocktail: Cocktail) {
+        remoteRepository.searchById(cocktail.id).firstOrNull()?.let {
+            if (cocktail != it) {
+                Log.d(TAG, "Updating... OLD: $cocktail. NEW: $it")
+                localRepository.updateFavoriteState(it, true)
             }
         }
-        return Result.success()
+    }
+
+    companion object {
+        private const val TAG = "WM-FavoritesUpdateWorker"
     }
 }

@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CocktailsRemoteRepository @Inject constructor(private val httpClient: HttpClient) : ApiService {
@@ -26,12 +27,14 @@ class CocktailsRemoteRepository @Inject constructor(private val httpClient: Http
     }
 
     override suspend fun searchById(id: String): List<Cocktail> {
-        val response: DrinkSearchResponse = httpClient.get(ApiService.BASE_URL) {
-            url {
-                path(ApiService.PATH_SEARCH_BY_ID)
-                parameters.append(ApiService.KEY_SEARCH_BY_ID, id)
-            }
-        }.body()
-        return response.drinks
+        return withContext(Dispatchers.IO) {
+            val response: DrinkSearchResponse = httpClient.get(ApiService.BASE_URL) {
+                url {
+                    path(ApiService.PATH_SEARCH_BY_ID)
+                    parameters.append(ApiService.KEY_SEARCH_BY_ID, id)
+                }
+            }.body()
+            response.drinks
+        }
     }
 }
