@@ -47,7 +47,7 @@ fun HomeScreen(
     paddingValues: PaddingValues,
     uiState: DrinksUiState,
     scaffoldState: ScaffoldState,
-    onSearch: (String) -> Unit,
+    onSearch: () -> Unit,
     onErrorDismissed: () -> Unit,
     onListItemClick: (cocktail: Cocktail) -> Unit,
     onFavoriteStateChange: (itemId: String, isFavorite: Boolean) -> Unit,
@@ -80,7 +80,7 @@ fun HomeScreen(
                 actionLabel = retryMessageText
             )
             if (snackbarResult == SnackbarResult.ActionPerformed) {
-                onSearchState(uiState.query)
+                onSearchState()
             }
             // Once the message is displayed and dismissed, notify the ViewModel
             onErrorDismissState()
@@ -94,13 +94,13 @@ fun SearchBar(
     isLoading: Boolean,
     text: String,
     onValueChange: (String) -> Unit,
-    onSearch: (String) -> Unit,
+    onSearch: () -> Unit,
     onToggleDarkMode: () -> Unit
 ) {
     val focusManagerState by rememberUpdatedState(newValue = LocalFocusManager.current)
 
     val search = {
-        onSearch(text)
+        onSearch()
         focusManagerState.clearFocus()
     }
 
@@ -134,7 +134,6 @@ fun SearchBar(
                 leadingIconColor = LocalContentColor.current
             ),
             onValueChange = onValueChange,
-            enabled = !isLoading,
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(
                 autoCorrect = false,

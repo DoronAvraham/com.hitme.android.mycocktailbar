@@ -42,6 +42,7 @@ fun MyCocktailBarApp(dataStoreManager: DataStoreManager) {
 
     val cocktailsViewModel = hiltViewModel<CocktailsListViewModel>()
     val uiState by cocktailsViewModel.uiState.collectAsStateWithLifecycle()
+    val query = cocktailsViewModel.query
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination?.route
@@ -61,7 +62,7 @@ fun MyCocktailBarApp(dataStoreManager: DataStoreManager) {
                         AppDestinations.HOME_SCREEN -> SearchBar(
                             modifier = Modifier.fillMaxWidth(),
                             isLoading = uiState.isLoading,
-                            text = uiState.query,
+                            text = query,
                             onValueChange = cocktailsViewModel::onSearchTextChange,
                             onSearch = cocktailsViewModel::searchCocktail,
                             onToggleDarkMode = onToggleDarkMode

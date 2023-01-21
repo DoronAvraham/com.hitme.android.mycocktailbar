@@ -1,5 +1,8 @@
 package com.hitme.android.mycocktailbar.ui.viewmodels
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hitme.android.mycocktailbar.R
@@ -24,6 +27,9 @@ class CocktailsListViewModel @Inject constructor(
 
     private var job: Job? = null
 
+    var query by mutableStateOf("")
+        private set
+
     // Internal Mutable Stat flow that allows changes only from the ViewModel.
     private val _uiState: MutableStateFlow<DrinksUiState> = MutableStateFlow(DrinksUiState())
     // Exposed immutable State Flow that allows only read actions.
@@ -36,10 +42,14 @@ class CocktailsListViewModel @Inject constructor(
         getFavorites()
     }
 
+    fun searchCocktail() {
+        searchCocktail(query)
+    }
+
     /**
      * Get [query] search results via cold flow and update the [_uiState] (hot flow).
      */
-    fun searchCocktail(query: String) {
+    private fun searchCocktail(query: String) {
         _uiState.update { it.copy(isLoading = true, cocktails = emptyList()) }
         job?.cancel()
         job = viewModelScope.launch {
@@ -60,7 +70,7 @@ class CocktailsListViewModel @Inject constructor(
      * Store the search text state.
      */
     fun onSearchTextChange(text: String) {
-        _uiState.update { it.copy(query = text) }
+        query = text
     }
 
     /**
@@ -114,14 +124,12 @@ class CocktailsListViewModel @Inject constructor(
  *
  * @property cocktails Results to display.
  * @property favorites Items marked by the user as favorites.
- * @property query Last executed search query.
  * @property isLoading True in case a current query is running. False otherwise.
  * @property errorMessageId Error message resource ID to display.
  */
 data class DrinksUiState(
     val cocktails: List<Cocktail> = emptyList(),
     val favorites: List<Cocktail> = emptyList(),
-    val query: String = "",
     val isLoading: Boolean = false,
     val errorMessageId: Int = -1,
     val selectedCocktail: Cocktail = Cocktail()
