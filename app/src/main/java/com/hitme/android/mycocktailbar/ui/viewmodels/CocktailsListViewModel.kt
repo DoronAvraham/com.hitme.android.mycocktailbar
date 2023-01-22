@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hitme.android.mycocktailbar.R
+import com.hitme.android.mycocktailbar.Result
 import com.hitme.android.mycocktailbar.data.Cocktail
 import com.hitme.android.mycocktailbar.data.CocktailsLocalRepository
 import com.hitme.android.mycocktailbar.data.CocktailsRemoteRepository
@@ -13,7 +14,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -50,19 +50,19 @@ class CocktailsListViewModel @Inject constructor(
      * Get [query] search results via cold flow and update the [_uiState] (hot flow).
      */
     private fun searchCocktail(query: String) {
-        _uiState.update { it.copy(isLoading = true, cocktails = emptyList()) }
+
         job?.cancel()
         job = viewModelScope.launch {
             remoteRepository.search(query)
-                .catch { error ->
-                    _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            errorMessageId = resolveErrorMessage(error)
-                        )
+                .collect { result ->
+                    when (result) {
+                        is Result.Loading -> _uiState.update { it.copy(isLoading = true, cocktails = emptyList()) }
+                        is Result.Success -> _uiState.update { it.copy(isLoading = false, cocktails = result.data) }
+                        is Result.Error -> _uiState.update {
+                            it.copy(isLoading = false, errorMessageId = resolveErrorMessage(result.exception))
+                        }
                     }
                 }
-                .collect { drinks -> _uiState.update { it.copy(isLoading = false, cocktails = drinks) } }
         }
     }
 
@@ -115,7 +115,7 @@ class CocktailsListViewModel @Inject constructor(
         }
     }
 
-    private fun resolveErrorMessage(exception: Throwable): Int =
+    private fun resolveErrorMessage(exception: Throwable?): Int =
         if (exception is IOException) R.string.comm_error else R.string.generic_error
 }
 

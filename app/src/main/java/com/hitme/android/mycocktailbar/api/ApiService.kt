@@ -2,6 +2,7 @@ package com.hitme.android.mycocktailbar.api
 
 import android.util.Log
 import com.hitme.android.mycocktailbar.BuildConfig
+import com.hitme.android.mycocktailbar.Result
 import com.hitme.android.mycocktailbar.data.Cocktail
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -16,7 +17,7 @@ import kotlinx.serialization.json.Json
 
 interface ApiService {
 
-    suspend fun search(query: String): Flow<List<Cocktail>>
+    suspend fun search(query: String): Flow<Result<List<Cocktail>>>
 
     suspend fun searchById(id: String): List<Cocktail>
 
