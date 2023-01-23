@@ -68,9 +68,7 @@ fun MyCocktailBarApp(dataStoreManager: DataStoreManager) {
                             onToggleDarkMode = onToggleDarkMode
                         )
                         AppDestinations.DETAILS_SCREEN -> DetailsTitleBar(
-                            title = uiState.selectedCocktail.name,
-                            cocktailId = uiState.selectedCocktail.id,
-                            favorites = uiState.favorites,
+                            cocktail = uiState.selectedCocktail,
                             onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
                             onBackClicked = navController::navigateUp
                         )

@@ -36,7 +36,6 @@ fun NavGraph(
                 onSearch = cocktailsViewModel::searchCocktail,
                 onErrorDismissed = cocktailsViewModel::onErrorDismissed,
                 onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
-                onFavoriteStatusCheck = cocktailsViewModel::onFavoriteStatusCheck,
                 onListItemClick = { cocktail ->
                     cocktailsViewModel.onCocktailSelected(cocktail)
                     navigationActions.navigate(AppDestinations.DETAILS_SCREEN)
@@ -51,7 +50,6 @@ fun NavGraph(
                 favorites = uiState.favorites,
                 paddingValues = paddingValues,
                 onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
-                onFavoriteStatusCheck = { true },
                 onListItemClick = { cocktail ->
                     cocktailsViewModel.onCocktailSelected(cocktail)
                     navigationActions.navigate(AppDestinations.DETAILS_SCREEN)

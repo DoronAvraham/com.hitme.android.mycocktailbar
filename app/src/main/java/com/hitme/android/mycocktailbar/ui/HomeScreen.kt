@@ -50,8 +50,7 @@ fun HomeScreen(
     onSearch: () -> Unit,
     onErrorDismissed: () -> Unit,
     onListItemClick: (cocktail: Cocktail) -> Unit,
-    onFavoriteStateChange: (itemId: String, isFavorite: Boolean) -> Unit,
-    onFavoriteStatusCheck: (itemId: String) -> Boolean
+    onFavoriteStateChange: (cocktail: Cocktail) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -63,7 +62,6 @@ fun HomeScreen(
             cocktails = uiState.cocktails,
             onListItemClick = onListItemClick,
             onFavoriteStateChange = onFavoriteStateChange,
-            onFavoriteStatusCheck = onFavoriteStatusCheck
         )
     }
 
@@ -165,8 +163,7 @@ fun HomeScreenPreview() {
             onSearch = {},
             onErrorDismissed = {},
             onListItemClick = {},
-            onFavoriteStateChange = { _, _ -> },
-            onFavoriteStatusCheck = { false }
+            onFavoriteStateChange = {},
         )
     }
 }

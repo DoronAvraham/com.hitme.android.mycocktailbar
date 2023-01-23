@@ -83,10 +83,8 @@ fun DetailsScreen(
 @Composable
 fun DetailsTitleBar(
     modifier: Modifier = Modifier,
-    title: String,
-    cocktailId: String,
-    favorites: List<Cocktail>,
-    onFavoriteStateChange: (itemId: String, isFavorite: Boolean) -> Unit,
+    cocktail: Cocktail,
+    onFavoriteStateChange: (cocktail: Cocktail) -> Unit,
     onBackClicked: () -> Unit
 ) {
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
@@ -98,14 +96,13 @@ fun DetailsTitleBar(
 
         Text(
             modifier = Modifier.weight(1f),
-            text = title,
+            text = cocktail.name,
         )
 
         FavoriteButton(
             color = MaterialTheme.colors.secondaryVariant,
-            itemId = cocktailId,
-            isFavorite = favorites.any { it.id == cocktailId },
-            onFavoriteStateChange = onFavoriteStateChange
+            isFavorite = cocktail.isFavorite,
+            onFavoriteStateChange = { onFavoriteStateChange(cocktail) }
         )
     }
 }
