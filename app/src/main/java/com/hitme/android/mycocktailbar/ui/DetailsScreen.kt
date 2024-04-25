@@ -25,7 +25,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.hitme.android.mycocktailbar.data.Cocktail
-import com.hitme.android.mycocktailbar.ui.compose.FavoriteButton
 import com.hitme.android.mycocktailbar.ui.compose.PreviewUtils
 import com.hitme.android.mycocktailbar.ui.theme.MyCocktailBarTheme
 
@@ -83,10 +82,7 @@ fun DetailsScreen(
 @Composable
 fun DetailsTitleBar(
     modifier: Modifier = Modifier,
-    title: String,
-    cocktailId: String,
-    favorites: List<Cocktail>,
-    onFavoriteStateChange: (itemId: String, isFavorite: Boolean) -> Unit,
+    cocktailName: String,
     onBackClicked: () -> Unit
 ) {
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
@@ -98,14 +94,7 @@ fun DetailsTitleBar(
 
         Text(
             modifier = Modifier.weight(1f),
-            text = title,
-        )
-
-        FavoriteButton(
-            color = MaterialTheme.colors.secondaryVariant,
-            itemId = cocktailId,
-            isFavorite = favorites.any { it.id == cocktailId },
-            onFavoriteStateChange = onFavoriteStateChange
+            text = cocktailName,
         )
     }
 }

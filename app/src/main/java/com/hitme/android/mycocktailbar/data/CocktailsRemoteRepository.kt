@@ -1,6 +1,8 @@
 package com.hitme.android.mycocktailbar.data
 
+import com.hitme.android.mycocktailbar.Result
 import com.hitme.android.mycocktailbar.api.ApiService
+import com.hitme.android.mycocktailbar.asResult
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -14,7 +16,7 @@ import javax.inject.Inject
 
 class CocktailsRemoteRepository @Inject constructor(private val httpClient: HttpClient) : ApiService {
 
-    override suspend fun search(query: String): Flow<List<Cocktail>> {
+    override suspend fun search(query: String): Flow<Result<List<Cocktail>>> {
         return flow {
             val response: DrinkSearchResponse = httpClient.get(ApiService.BASE_URL) {
                 url {
@@ -23,7 +25,9 @@ class CocktailsRemoteRepository @Inject constructor(private val httpClient: Http
                 }
             }.body()
             emit(response.drinks)
-        }.flowOn(Dispatchers.IO)
+        }
+            .asResult()
+            .flowOn(Dispatchers.IO)
     }
 
     override suspend fun searchById(id: String): List<Cocktail> {

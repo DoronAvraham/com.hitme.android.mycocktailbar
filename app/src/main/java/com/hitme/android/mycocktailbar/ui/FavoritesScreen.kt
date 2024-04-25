@@ -21,8 +21,7 @@ fun FavoritesScreen(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues,
     onListItemClick: (cocktail: Cocktail) -> Unit,
-    onFavoriteStateChange: (itemId: String, isFavorite: Boolean) -> Unit,
-    onFavoriteStatusCheck: (itemId: String) -> Boolean
+    onFavoriteStateChange: (cocktail: Cocktail) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -34,7 +33,6 @@ fun FavoritesScreen(
             cocktails = favorites,
             onListItemClick = onListItemClick,
             onFavoriteStateChange = onFavoriteStateChange,
-            onFavoriteStatusCheck = onFavoriteStatusCheck
         )
     }
 }
@@ -58,8 +56,7 @@ fun FavoritesScreenPreview() {
             paddingValues = PaddingValues(0.dp),
             favorites = PreviewUtils.drinksList,
             onListItemClick = { },
-            onFavoriteStateChange = { _, _ -> },
-            onFavoriteStatusCheck = { true }
+            onFavoriteStateChange = {},
         )
     }
 }

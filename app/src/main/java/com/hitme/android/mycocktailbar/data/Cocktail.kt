@@ -1,6 +1,7 @@
 package com.hitme.android.mycocktailbar.data
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -23,4 +24,7 @@ data class Cocktail(
     val thumbnailUrl: String = "",
     @SerialName("strImageSource")
     val imageUrl: String = ""
-)
+) {
+    @Ignore
+    var isFavorite: Boolean = false
+}
