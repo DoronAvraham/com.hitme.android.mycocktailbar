@@ -67,13 +67,12 @@ fun MyCocktailBarApp(dataStoreManager: DataStoreManager) {
                             onSearch = cocktailsViewModel::searchCocktail,
                             onToggleDarkMode = onToggleDarkMode
                         )
+
                         AppDestinations.DETAILS_SCREEN -> DetailsTitleBar(
-                            title = uiState.selectedCocktail.name,
-                            cocktailId = uiState.selectedCocktail.id,
-                            favorites = uiState.favorites,
-                            onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
-                            onBackClicked = navController::navigateUp
+                            cocktailName = cocktailsViewModel.selectedCocktail!!.name,
+                            onBackClicked = navController::popBackStack
                         )
+
                         else -> FavoritesTitleBar(currentDestination = currentDestination)
                     }
                 }

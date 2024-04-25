@@ -36,11 +36,11 @@ fun NavGraph(
                 onSearch = cocktailsViewModel::searchCocktail,
                 onErrorDismissed = cocktailsViewModel::onErrorDismissed,
                 onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
-                onFavoriteStatusCheck = cocktailsViewModel::onFavoriteStatusCheck,
                 onListItemClick = { cocktail ->
-                    cocktailsViewModel.onCocktailSelected(cocktail)
+                    cocktailsViewModel.onSelectedCocktailStateChanged(cocktail)
                     navigationActions.navigate(AppDestinations.DETAILS_SCREEN)
                 }
+
             )
             if (uiState.isLoading) {
                 CircularProgressBar(modifier = Modifier.fillMaxSize())
@@ -51,16 +51,16 @@ fun NavGraph(
                 favorites = uiState.favorites,
                 paddingValues = paddingValues,
                 onFavoriteStateChange = cocktailsViewModel::onFavoriteStateChange,
-                onFavoriteStatusCheck = { true },
                 onListItemClick = { cocktail ->
-                    cocktailsViewModel.onCocktailSelected(cocktail)
+                    cocktailsViewModel.onSelectedCocktailStateChanged(cocktail)
                     navigationActions.navigate(AppDestinations.DETAILS_SCREEN)
                 }
             )
         }
+
         composable(AppDestinations.DETAILS_SCREEN) {
             DetailsScreen(
-                cocktail = uiState.selectedCocktail
+                cocktail = cocktailsViewModel.selectedCocktail!!
             )
         }
     }

@@ -13,8 +13,10 @@ import com.hitme.android.mycocktailbar.data.CocktailsRemoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
@@ -30,39 +32,51 @@ class CocktailsListViewModel @Inject constructor(
     var query by mutableStateOf("")
         private set
 
-    // Internal Mutable Stat flow that allows changes only from the ViewModel.
-    private val _uiState: MutableStateFlow<DrinksUiState> = MutableStateFlow(DrinksUiState())
-    // Exposed immutable State Flow that allows only read actions.
-    val uiState: StateFlow<DrinksUiState> = _uiState
+    var selectedCocktail: Cocktail? by mutableStateOf(null)
+        private set
 
-    init {
-        // Show first results using the query "wine".
-        // Later consider to use a different dedicated API (i.e. random or most popular).
-        searchCocktail("wine")
-        getFavorites()
-    }
+    private val _cocktailsFlow: MutableStateFlow<Result<List<Cocktail>>> = MutableStateFlow(Result.Success(emptyList()))
+    private val _favoritesFlow = localRepository.getFavorites()
+    // Exposed immutable State Flow that allows only read actions.
+    val uiState: StateFlow<DrinksUiState> = combine(
+        _cocktailsFlow,
+        _favoritesFlow
+    ) { result, favorites ->
+        when (result) {
+            is Result.Loading -> DrinksUiState(isLoading = true, cocktails = emptyList(), favorites = favorites)
+            is Result.Success -> {
+                val results = result.data.map {
+                    it.isFavorite = favorites.contains(it)
+                    it
+                }
+                DrinksUiState(isLoading = false, cocktails = results, favorites = favorites)
+            }
+            is Result.Error -> DrinksUiState(
+                isLoading = false,
+                errorMessageId = resolveErrorMessage(result.exception),
+                favorites = favorites
+            )
+            is Result.ErrorDismissed -> DrinksUiState(
+                isLoading = false,
+                errorMessageId = -1
+            )
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = DrinksUiState()
+    )
 
     fun searchCocktail() {
         searchCocktail(query)
     }
 
-    /**
-     * Get [query] search results via cold flow and update the [_uiState] (hot flow).
-     */
     private fun searchCocktail(query: String) {
 
         job?.cancel()
         job = viewModelScope.launch {
             remoteRepository.search(query)
-                .collect { result ->
-                    when (result) {
-                        is Result.Loading -> _uiState.update { it.copy(isLoading = true, cocktails = emptyList()) }
-                        is Result.Success -> _uiState.update { it.copy(isLoading = false, cocktails = result.data) }
-                        is Result.Error -> _uiState.update {
-                            it.copy(isLoading = false, errorMessageId = resolveErrorMessage(result.exception))
-                        }
-                    }
-                }
+                .collect { result -> _cocktailsFlow.emit(result) }
         }
     }
 
@@ -76,43 +90,24 @@ class CocktailsListViewModel @Inject constructor(
     /**
      * Add/Remove a cocktails from DB when favorite state changes.
      */
-    fun onFavoriteStateChange(cocktailId: String, isFavorite: Boolean) {
+    fun onFavoriteStateChange(cocktail: Cocktail) {
         viewModelScope.launch {
-            getCocktailById(cocktailId)?.apply { localRepository.updateFavoriteState(this, isFavorite) }
+            localRepository.updateFavoriteState(cocktail, !cocktail.isFavorite)
         }
-    }
-
-    /**
-     * Check if provided cocktails is in favorites lists.
-     */
-    fun onFavoriteStatusCheck(cocktailId: String): Boolean {
-        return _uiState.value.favorites.any { it.id == cocktailId }
     }
 
     /**
      * Reset the error message after it was displayed in order to prevent displaying it again.
      */
     fun onErrorDismissed() {
-        _uiState.update { it.copy(isLoading = false, errorMessageId = -1) }
-    }
-
-    fun getCocktailById(id: String): Cocktail? {
-        return (_uiState.value.favorites + _uiState.value.cocktails).find { it.id == id }
-    }
-
-    fun onCocktailSelected(cocktail: Cocktail) {
-        _uiState.update { it.copy(selectedCocktail = cocktail) }
-    }
-
-    /**
-     * Establish a connection with the favorites DB using a Flow.
-     */
-    private fun getFavorites() {
         viewModelScope.launch {
-            localRepository.getFavorites().collect { favorites ->
-                _uiState.update { it.copy(favorites = favorites) }
-            }
+            _cocktailsFlow.emit(Result.Success(emptyList()))
+            _cocktailsFlow.emit(Result.ErrorDismissed)
         }
+    }
+
+    fun onSelectedCocktailStateChanged(cocktail: Cocktail? = null) {
+        selectedCocktail = cocktail
     }
 
     private fun resolveErrorMessage(exception: Throwable?): Int =
@@ -132,5 +127,4 @@ data class DrinksUiState(
     val favorites: List<Cocktail> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessageId: Int = -1,
-    val selectedCocktail: Cocktail = Cocktail()
 )

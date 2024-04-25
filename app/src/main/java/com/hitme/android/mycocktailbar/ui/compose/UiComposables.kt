@@ -37,8 +37,7 @@ import com.hitme.android.mycocktailbar.ui.theme.MyCocktailBarTheme
 fun CocktailsList(
     cocktails: List<Cocktail>,
     onListItemClick: (cocktail: Cocktail) -> Unit,
-    onFavoriteStateChange: (itemId: String, isFavorite: Boolean) -> Unit,
-    onFavoriteStatusCheck: (itemId: String) -> Boolean
+    onFavoriteStateChange: (cocktail: Cocktail) -> Unit,
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -49,7 +48,6 @@ fun CocktailsList(
                 cocktail = cocktail,
                 onClick = onListItemClick,
                 onFavoriteStateChange = onFavoriteStateChange,
-                onFavoriteStatusCheck = onFavoriteStatusCheck
             )
         }
     }
@@ -60,8 +58,7 @@ fun ListItem(
     modifier: Modifier = Modifier,
     cocktail: Cocktail,
     onClick: (cocktail: Cocktail) -> Unit,
-    onFavoriteStateChange: (itemId: String, isFavorite: Boolean) -> Unit,
-    onFavoriteStatusCheck: (itemId: String) -> Boolean
+    onFavoriteStateChange: (cocktail: Cocktail) -> Unit,
 ) {
     Card(
         modifier = modifier
@@ -95,9 +92,8 @@ fun ListItem(
                 )
             }
             FavoriteButton(
-                itemId = cocktail.id,
-                onFavoriteStateChange = onFavoriteStateChange,
-                isFavorite = onFavoriteStatusCheck(cocktail.id)
+                onFavoriteStateChange = { onFavoriteStateChange(cocktail) },
+                isFavorite = cocktail.isFavorite
             )
         }
     }
@@ -107,14 +103,13 @@ fun ListItem(
 fun FavoriteButton(
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colors.primaryVariant,
-    itemId: String,
     isFavorite: Boolean,
-    onFavoriteStateChange: (itemId: String, isFavorite: Boolean) -> Unit
+    onFavoriteStateChange: () -> Unit
 ) {
     IconToggleButton(
         checked = isFavorite,
         onCheckedChange = {
-            onFavoriteStateChange(itemId, it)
+            onFavoriteStateChange()
         }
     ) {
         Icon(
@@ -136,8 +131,7 @@ fun ListItemPreview() {
         ListItem(
             cocktail = Cocktail(),
             onClick = {},
-            onFavoriteStateChange = { _, _ -> },
-            onFavoriteStatusCheck = { true }
+            onFavoriteStateChange = {},
         )
     }
 }
@@ -147,8 +141,7 @@ fun ListItemPreview() {
 fun FavoritePreview() {
     MyCocktailBarTheme(darkTheme = false) {
         FavoriteButton(
-            itemId = "",
-            onFavoriteStateChange = { _, _ -> },
+            onFavoriteStateChange = {},
             isFavorite = false
         )
     }
