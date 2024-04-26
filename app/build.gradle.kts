@@ -14,6 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.hitme.android.mycocktailbar"
+        namespace = "com.hitme.android.mycocktailbar"
         minSdk = AndroidVersions.MIN_SDK
         targetSdk = AndroidVersions.TARGET_SDK
         versionCode = 1
@@ -27,6 +28,15 @@ android {
                 arg("room.schemaLocation", "$projectDir/schemas")
             }
         }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
     }
 
     buildTypes {
@@ -43,6 +53,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.COMPOSE

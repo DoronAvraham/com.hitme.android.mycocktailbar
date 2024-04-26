@@ -1,38 +1,38 @@
 object AndroidVersions {
     const val MIN_SDK = 23
     const val TARGET_SDK = 33
-    const val COMPILE_SDK = 33
+    const val COMPILE_SDK = 34
 }
 
 object Versions {
     // Android dependencies
-    const val AGP = "7.3.1"
-    const val ANDROIDX_APPCOMPAT = "1.4.1"
-    const val ANDROIDX_CORE_KTX = "1.7.0"
-    const val ANDROIDX_DATASTORE = "1.0.0"
-    const val ANDROIDX_HILT = "1.0.0"
-    const val ANDROIDX_NAVIGATION = "2.5.3"
-    const val ANDROIDX_LIFECYCLE = "2.6.0-alpha03"
-    const val ANDROIDX_ROOM = "2.4.3"
-    const val ANDROIDX_WORK_MANAGER = "2.7.1"
-    const val COMPOSE = "1.3.2"
-    const val COMPOSE_ACTIVITY = "1.6.1"
-    const val COMPOSE_MATERIAL = "1.3.1"
-    const val DAGGER_HILT = "2.44.2"
+    const val AGP = "8.3.2"
+    const val ANDROIDX_APPCOMPAT = "1.6.1"
+    const val ANDROIDX_CORE_KTX = "1.13.0"
+    const val ANDROIDX_DATASTORE = "1.1.0"
+    const val ANDROIDX_HILT = "1.2.0"
+    const val ANDROIDX_NAVIGATION = "2.7.7"
+    const val ANDROIDX_LIFECYCLE = "2.7.0"
+    const val ANDROIDX_ROOM = "2.6.1"
+    const val ANDROIDX_WORK_MANAGER = "2.9.0"
+    const val COMPOSE = "1.5.12"
+    const val COMPOSE_ACTIVITY = "1.9.0"
+    const val COMPOSE_MATERIAL = "1.6.6"
+    const val DAGGER_HILT = "2.51.1"
 
     // 3rd party dependencies
-    const val COIL = "2.2.2"
+    const val COIL = "2.6.0"
     const val DEPENDENCY_UPDATER = "0.42.0"
-    const val KOTLIN = "1.7.20"
-    const val KOTLINX_COROUTINES = "1.6.4"
-    const val KOTLINX_SERIALIZATION = "1.4.1"
+    const val KOTLIN = "1.9.23"
+    const val KOTLINX_COROUTINES = "1.8.0"
+    const val KOTLINX_SERIALIZATION = "1.6.3"
     const val KTLINT = "10.2.1"
-    const val KTOR = "2.2.1"
-    const val OKHTTP_LOGGING = "4.10.0"
+    const val KTOR = "2.3.10"
+    const val OKHTTP_LOGGING = "4.12.0"
 
     // Testing dependencies
-    const val ANDROIDX_ESPRESSO = "3.5.0"
-    const val ANDROIDX_JUNIT = "1.1.4"
+    const val ANDROIDX_ESPRESSO = "3.5.1"
+    const val ANDROIDX_JUNIT = "1.1.5"
     const val JUNIT = "4.13.2"
 }
 

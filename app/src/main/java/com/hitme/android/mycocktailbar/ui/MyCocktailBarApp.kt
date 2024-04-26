@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -31,7 +30,6 @@ import kotlinx.coroutines.launch
 /**
  * Main App UI entry point.
  */
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun MyCocktailBarApp(dataStoreManager: DataStoreManager) {
     val navController = rememberNavController()
